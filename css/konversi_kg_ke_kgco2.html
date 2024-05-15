@@ -5,6 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Konversi KG ke KGCO2</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-container {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -12,23 +48,26 @@
         <div class="back-button">
             <button onclick="window.location.href='index.html'">Kembali ke Halaman Utama</button>
         </div>
-        <div id="konversi-kg">
+        <div id="konversi-kg" class="form-container">
             <h2>Konversi Penggunaan Kertas</h2>
-            <label for="kg">Penggunaan Kertas (kg):</label>
-            <input type="number" id="kg" name="kg">
+            <div class="form-group">
+                <label for="kg">Penggunaan Kertas (kg):</label>
+                <input type="number" id="kg" name="kg">
+            </div>
             <button onclick="hitung()">Hitung</button>
             <div class="result">
                 <p id="kgco2">Jumlah Emisi CO2 (kg): </p>
             </div>
         </div>
+    </div>
 
-        <script>
-            function hitung() {
-                var kg = document.getElementById("kg").value;
-                var kgco2 = kg * 1.2; // Misalkan 1 kg kertas menghasilkan 1.2 kg CO2
+    <script>
+        function hitung() {
+            var kg = document.getElementById("kg").value;
+            var kgco2 = kg * 1.2; // Misalkan 1 kg kertas menghasilkan 1.2 kg CO2
 
-                document.getElementById("kgco2").innerHTML = "Jumlah Emisi CO2 (kg): " + kgco2.toFixed(2);
-            }
-        </script>
+            document.getElementById("kgco2").innerHTML = "Jumlah Emisi CO2 (kg): " + kgco2.toFixed(2);
+        }
+    </script>
 </body>
 </html>
