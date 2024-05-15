@@ -1,26 +1,18 @@
-/* Tambahan di bagian atas style.css */
-header, footer {
-    background-color: #007BFF;
-    color: white;
-    padding: 10px 0;
-    text-align: center;
-}
-
-footer {
-    margin-top: 20px;
-
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid #ccc;
+    background-color: #fff;
+    border: 1px solid #ddd;
     border-radius: 10px;
-    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 h1 {
@@ -30,20 +22,21 @@ h1 {
 
 nav {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 
 nav button {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
+    margin: 10px;
+    padding: 15px 25px;
+    font-size: 16px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    text-align: center;
+    transition: background-color 0.3s ease;
 }
 
 nav button:hover {
@@ -52,15 +45,18 @@ nav button:hover {
 
 .back-button {
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .back-button button {
-    padding: 10px;
+    padding: 10px 20px;
     background-color: #007BFF;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 .back-button button:hover {
@@ -70,7 +66,7 @@ nav button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 
 table, th, td {
@@ -82,7 +78,72 @@ th, td {
     text-align: left;
 }
 
+th {
+    background-color: #f2f2f2;
+}
+
+.table-caption {
+    font-size: 1.5em;
+    margin: 20px 0;
+    color: #666;
+}
+
 .result {
     margin-top: 20px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+header, footer {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 0;
     text-align: center;
+}
+
+footer {
+    margin-top: 20px;
+}
+
+.chart-container {
+    position: relative;
+    height: 400px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.form-container {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #218838;
 }
