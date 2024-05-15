@@ -5,6 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penggunaan Kertas Departemen 2</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .table-container {
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #e6f7ff; /* Light Blue */
+        }
+        .back-button {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .back-button button {
+            padding: 10px 20px;
+            background-color: #0099cc; /* Blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .back-button button:hover {
+            background-color: #007399;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 2em;
+            color: #333;
+        }
+        .table-container {
+            margin: 0 auto;
+            max-width: 90%;
+        }
+        .table-caption {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -12,8 +64,8 @@
         <div class="back-button">
             <button onclick="window.location.href='index.html'">Kembali ke Halaman Utama</button>
         </div>
-        <div id="data-departemen">
-            <h2>Data Penggunaan Kertas</h2>
+        <div id="data-departemen" class="table-container">
+            <div class="table-caption">Data Penggunaan Kertas</div>
             <table>
                 <thead>
                     <tr>
@@ -22,7 +74,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Data dari Excel -->
+                    <tr><td>Januari</td><td>1000</td></tr>
+                    <tr><td>Februari</td><td>1100</td></tr>
+                    <tr><td>Maret</td><td>1200</td></tr>
+                    <tr><td>April</td><td>1300</td></tr>
+                    <tr><td>Mei</td><td>1400</td></tr>
+                    <tr><td>Juni</td><td>1500</td></tr>
+                    <tr><td>Juli</td><td>1600</td></tr>
+                    <tr><td>Agustus</td><td>1700</td></tr>
+                    <tr><td>September</td><td>1800</td></tr>
+                    <tr><td>Oktober</td><td>1900</td></tr>
+                    <tr><td>November</td><td>2000</td></tr>
+                    <tr><td>Desember</td><td>2100</td></tr>
                 </tbody>
             </table>
         </div>
