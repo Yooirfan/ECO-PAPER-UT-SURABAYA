@@ -5,6 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Konversi Emisi Karbon ke Pohon dan Biaya</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-container {
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -12,26 +48,29 @@
         <div class="back-button">
             <button onclick="window.location.href='index.html'">Kembali ke Halaman Utama</button>
         </div>
-        <div id="konversi-emisi">
+        <div id="konversi-emisi" class="form-container">
             <h2>Konversi Emisi Karbon</h2>
-            <label for="emisi">Emisi Karbon (kg CO2):</label>
-            <input type="number" id="emisi" name="emisi">
+            <div class="form-group">
+                <label for="emisi">Emisi Karbon (kg CO2):</label>
+                <input type="number" id="emisi" name="emisi">
+            </div>
             <button onclick="hitung()">Hitung</button>
             <div class="result">
                 <p id="jumlahPohon">Jumlah Pohon yang Ditanam: </p>
                 <p id="biaya">Biaya yang Dikeluarkan (IDR): </p>
             </div>
         </div>
+    </div>
 
-        <script>
-            function hitung() {
-                var emisi = document.getElementById("emisi").value;
-                var jumlahPohon = emisi * (3.557 / 85.36);
-                var biaya = jumlahPohon * 30000;
+    <script>
+        function hitung() {
+            var emisi = document.getElementById("emisi").value;
+            var jumlahPohon = emisi * (3.557 / 85.36);
+            var biaya = jumlahPohon * 30000;
 
-                document.getElementById("jumlahPohon").innerHTML = "Jumlah Pohon yang Ditanam: " + jumlahPohon.toFixed(2);
-                document.getElementById("biaya").innerHTML = "Biaya yang Dikeluarkan (IDR): " + biaya.toFixed(2);
-            }
-        </script>
+            document.getElementById("jumlahPohon").innerHTML = "Jumlah Pohon yang Ditanam: " + jumlahPohon.toFixed(2);
+            document.getElementById("biaya").innerHTML = "Biaya yang Dikeluarkan (IDR): " + biaya.toFixed(2);
+        }
+    </script>
 </body>
 </html>
