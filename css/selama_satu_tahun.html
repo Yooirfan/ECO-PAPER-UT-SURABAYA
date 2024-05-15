@@ -7,26 +7,30 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <header>
+        <h1>Monitoring Emisi Karbon dan Penggunaan Kertas</h1>
+    </header>
     <div class="container">
         <h1>Penggunaan Kertas Selama Satu Tahun</h1>
         <div class="back-button">
             <button onclick="window.location.href='index.html'">Kembali ke Halaman Utama</button>
         </div>
-        <div id="grafik">
+        <div class="chart-container">
             <h2>Grafik Penggunaan Kertas</h2>
             <canvas id="paperUsageChart"></canvas>
         </div>
     </div>
+    <footer>
+        <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Data dari file Excel (simulasi)
         const data = {
             labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
             usage: [1200, 1100, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200] // Data simulasi
         };
 
-        // Fungsi untuk membuat grafik penggunaan kertas tahunan
         function buatGrafik() {
             var ctx = document.getElementById('paperUsageChart').getContext('2d');
             var chart = new Chart(ctx, {
@@ -52,7 +56,6 @@
             });
         }
 
-        // Panggil fungsi untuk membuat grafik setelah halaman dimuat
         window.onload = function() {
             buatGrafik();
         };
