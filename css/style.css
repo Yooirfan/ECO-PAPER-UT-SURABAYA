@@ -1,8 +1,7 @@
-html, body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100%;
 }
 
 .main-header {
@@ -46,42 +45,47 @@ nav ul li a {
 
 .hero {
     position: relative;
-    color: white;
-    text-align: center;
-    height: calc(100vh - 80px); /* Full height minus header */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .hero h1 {
-    font-size: 4em; /* Larger font size */
-    font-weight: bold; /* Bold font */
-    margin: 0;
     position: absolute;
-    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 3em;
+    margin: 0;
+    text-align: center;
 }
 
-.cta-button-container {
-    display: flex;
-    justify-content: center; /* Center align buttons */
-    gap: 10px; /* Space between buttons */
-    margin-top: 20px;
-}
-
-.cta-button {
-    background-color: #ffc107;
-    border: none;
-    color: black;
-    padding: 10px 20px;
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    width: 5%;
+    height: 5%;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    line-height: 2.5;
     cursor: pointer;
-    font-size: 1em;
-    border-radius: 8px; /* Rounded corners */
 }
 
-.cta-button:hover {
-    background-color: #e0a800; /* Slightly darker on hover */
+.carousel-control-prev {
+    left: 10px;
+}
+
+.carousel-control-next {
+    right: 10px;
 }
 
 footer {
@@ -89,76 +93,4 @@ footer {
     color: white;
     text-align: center;
     padding: 10px 0;
-    position: relative;
-    width: 100%;
-}
-
-/* Slideshow container */
-.slideshow-container {
-    max-width: 100%;
-    position: relative;
-    margin: auto;
-    overflow: hidden; /* To hide overflowed parts */
-    height: 100%; /* Full height */
-}
-
-.mySlides {
-    display: none;
-    width: 100%;
-    height: 100%; /* Full height */
-}
-
-img {
-    vertical-align: middle;
-}
-
-/* Next & previous buttons */
-.prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -22px;
-    color: white;
-    font-weight: bold;
-    font-size: 18px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-    z-index: 2;
-}
-
-.next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-}
-
-.prev {
-    left: 0;
-    border-radius: 3px 0 0 3px;
-}
-
-.prev:hover, .next:hover {
-    background-color: rgba(0,0,0,0.8);
-}
-
-/* Ensuring the slideshow covers the entire width of the screen */
-.slideshow-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Ensures the image covers the entire container */
-}
-
-/* Adjustments for the navigation buttons to stay within the container */
-.prev, .next {
-    top: 50%;
-    width: 50px;
-    height: 50px;
-    margin-top: -25px;
-    background-color: rgba(0,0,0,0.5);
-    border-radius: 50%;
-    line-height: 50px;
-    text-align: center;
-    font-size: 30px;
 }
