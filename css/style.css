@@ -45,21 +45,22 @@ nav ul li a {
 }
 
 .hero {
-    background-size: cover;
-    background-position: center;
+    position: relative;
     color: white;
+    text-align: center;
     height: calc(100vh - 80px); /* Full height minus header */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    position: relative;
 }
 
 .hero h1 {
     font-size: 4em; /* Larger font size */
     font-weight: bold; /* Bold font */
     margin: 0;
+    position: absolute;
+    z-index: 2;
 }
 
 .cta-button-container {
@@ -98,11 +99,13 @@ footer {
     position: relative;
     margin: auto;
     overflow: hidden; /* To hide overflowed parts */
+    height: 100%; /* Full height */
 }
 
 .mySlides {
     display: none;
     width: 100%;
+    height: 100%; /* Full height */
 }
 
 img {
@@ -128,6 +131,7 @@ img.rounded {
     transition: 0.6s ease;
     border-radius: 0 3px 3px 0;
     user-select: none;
+    z-index: 2;
 }
 
 .next {
