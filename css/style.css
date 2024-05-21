@@ -45,7 +45,6 @@ nav ul li a {
 }
 
 .hero {
-    background-image: url('../images/hero-image.jpg');
     background-size: cover;
     background-position: center;
     color: white;
@@ -102,10 +101,12 @@ footer {
     max-width: 100%;
     position: relative;
     margin: auto;
+    overflow: hidden; /* To hide overflowed parts */
 }
 
 .mySlides {
     display: none;
+    width: 100%;
 }
 
 img {
@@ -167,4 +168,34 @@ img.rounded {
 @keyframes fade {
     from {opacity: .4} 
     to {opacity: 1}
+}
+
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev {
+    left: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
 }
