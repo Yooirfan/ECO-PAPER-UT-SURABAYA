@@ -50,6 +50,10 @@ nav ul li a {
     color: white;
     padding: 100px 20px;
     text-align: center;
+    height: 100vh; /* Full height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .hero h1 {
