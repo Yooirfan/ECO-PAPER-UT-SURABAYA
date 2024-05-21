@@ -20,7 +20,9 @@ body {
 }
 
 .logo {
-    height: 50px;
+    height: auto; /* Atur tinggi otomatis agar proporsional */
+    max-height: 50px; /* Sesuaikan tinggi maksimal */
+    width: auto; /* Atur lebar otomatis agar proporsional */
 }
 
 nav ul {
