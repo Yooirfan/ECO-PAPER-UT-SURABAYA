@@ -42,7 +42,7 @@ nav ul li a {
 }
 
 .hero {
-    background-image: url('path/to/hero-image.jpg');
+    background-image: url('images/hero-image.jpg');
     background-size: cover;
     background-position: center;
     color: white;
