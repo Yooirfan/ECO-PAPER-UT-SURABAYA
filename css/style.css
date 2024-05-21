@@ -1,11 +1,7 @@
-body {
+html, body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    height: 100%;
-}
-
-html {
     height: 100%;
 }
 
@@ -53,7 +49,7 @@ nav ul li a {
     background-size: cover;
     background-position: center;
     color: white;
-    height: calc(100vh - 80px); /* Adjust height to fit screen without header/footer */
+    height: calc(100vh - 80px); /* Full height minus header */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -84,7 +80,6 @@ footer {
     color: white;
     text-align: center;
     padding: 10px 0;
-    position: absolute;
-    bottom: 0;
+    position: relative;
     width: 100%;
 }
