@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoring Penggunaan Kertas</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
     <header class="main-header">
@@ -17,37 +18,56 @@
             </nav>
         </div>
     </header>
-    <div id="carouselExampleControls" class="carousel slide hero" data-bs-ride="carousel">
+
+    <div id="carouselExampleControls" class="carousel slide hero" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="images/hero-image1.jpg" class="d-block w-100" alt="...">
+                <img src="images/hero-image1.jpg" alt="Slide 1">
             </div>
             <div class="carousel-item">
-                <img src="images/hero-image2.jpg" class="d-block w-100" alt="...">
+                <img src="images/hero-image2.jpg" alt="Slide 2">
             </div>
             <div class="carousel-item">
-                <img src="images/hero-image3.jpg" class="d-block w-100" alt="...">
+                <img src="images/hero-image3.jpg" alt="Slide 3">
             </div>
             <div class="carousel-item">
-                <img src="images/hero-image4.jpg" class="d-block w-100" alt="...">
+                <img src="images/hero-image4.jpg" alt="Slide 4">
             </div>
             <div class="carousel-item">
-                <img src="images/hero-image5.jpg" class="d-block w-100" alt="...">
+                <img src="images/hero-image5.jpg" alt="Slide 5">
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+            <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+            <span class="sr-only">Next</span>
         </a>
         <h1>Monitoring Penggunaan Kertas</h1>
     </div>
+
+    <div class="button-container">
+        <a href="#">Selama Satu Tahun</a>
+        <a href="#">Departemen 1</a>
+        <a href="#">Departemen 2</a>
+        <a href="#">Departemen 3</a>
+        <a href="#">Konversi KG ke KGCO2</a>
+        <a href="#">Konversi Emisi Karbon ke Pohon dan Biaya</a>
+    </div>
+
     <footer>
         <p>© 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $('.carousel').carousel({
+            interval: 10000 // 10 detik
+        });
+    </script>
 </body>
 </html>
