@@ -112,11 +112,6 @@ img {
     vertical-align: middle;
 }
 
-/* Rounded corners for images */
-img.rounded {
-    border-radius: 8px;
-}
-
 /* Next & previous buttons */
 .prev, .next {
     cursor: pointer;
@@ -146,4 +141,24 @@ img.rounded {
 
 .prev:hover, .next:hover {
     background-color: rgba(0,0,0,0.8);
+}
+
+/* Ensuring the slideshow covers the entire width of the screen */
+.slideshow-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire container */
+}
+
+/* Adjustments for the navigation buttons to stay within the container */
+.prev, .next {
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    margin-top: -25px;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    line-height: 50px;
+    text-align: center;
+    font-size: 30px;
 }
