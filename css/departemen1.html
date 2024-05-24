@@ -21,22 +21,46 @@
     </header>
     <main>
         <h1>Penggunaan Kertas Departemen 1</h1>
-        <div class="chart-container">
-            <canvas id="dept1Chart"></canvas>
-        </div>
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>Jan</th>
-                        <th>Sheets of Paper Used</th>
-                        <th>Employee</th>
+                        <th>Bulan</th>
+                        <th>Jumlah Kertas Digunakan</th>
+                        <th>Nama Karyawan</th>
                     </tr>
                 </thead>
                 <tbody id="dept1Data">
-                    <!-- Data akan dimuat secara dinamis -->
+                    <tr>
+                        <td>Jan</td>
+                        <td>400</td>
+                        <td>Farah Wijaya</td>
+                    </tr>
+                    <tr>
+                        <td>Jan</td>
+                        <td>400</td>
+                        <td>Eko Sari</td>
+                    </tr>
+                    <tr>
+                        <td>Jan</td>
+                        <td>1000</td>
+                        <td>Intan Prasetyo</td>
+                    </tr>
+                    <tr>
+                        <td>Jan</td>
+                        <td>500</td>
+                        <td>Andi Wijaya</td>
+                    </tr>
+                    <tr>
+                        <td>Jan</td>
+                        <td>200</td>
+                        <td>Joko Saputra</td>
+                    </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="chart-container">
+            <canvas id="dept1Chart"></canvas>
         </div>
     </main>
     <footer>
@@ -46,34 +70,20 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const dept1Data = document.getElementById('dept1Data');
             const ctx = document.getElementById('dept1Chart').getContext('2d');
-            const data = [
-                { month: 'Jan', sheets: 400, employee: 'Farah Wijaya' },
-                { month: 'Jan', sheets: 400, employee: 'Eko Sari' },
-                { month: 'Jan', sheets: 1000, employee: 'Intan Prasetyo' },
-                { month: 'Jan', sheets: 500, employee: 'Andi Wijaya' },
-                { month: 'Jan', sheets: 200, employee: 'Joko Saputra' },
-            ];
-
-            data.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${row.month}</td><td>${row.sheets}</td><td>${row.employee}</td>`;
-                dept1Data.appendChild(tr);
-            });
-
-            const chart = new Chart(ctx, {
+            const data = {
+                labels: ['Farah Wijaya', 'Eko Sari', 'Intan Prasetyo', 'Andi Wijaya', 'Joko Saputra'],
+                datasets: [{
+                    label: 'Jumlah Kertas Digunakan',
+                    data: [400, 400, 1000, 500, 200],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            };
+            const config = {
                 type: 'bar',
-                data: {
-                    labels: data.map(row => row.employee),
-                    datasets: [{
-                        label: 'Sheets of Paper Used',
-                        data: data.map(row => row.sheets),
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
-                },
+                data: data,
                 options: {
                     scales: {
                         y: {
@@ -81,7 +91,8 @@
                         }
                     }
                 }
-            });
+            };
+            new Chart(ctx, config);
         });
     </script>
 </body>
