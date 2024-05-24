@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penggunaan Kertas Departemen ADM</title>
+    <title>Penggunaan Kertas Departemen 1 (ADM)</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
@@ -14,52 +14,52 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Beranda</a></li>
-                    <li><a href="#">Penggunaan Kertas Departemen ADM</a></li>
+                    <li><a href="#">Penggunaan Kertas Departemen 1</a></li>
                 </ul>
             </nav>
         </div>
     </header>
     <main>
-        <h1>Penggunaan Kertas Departemen ADM</h1>
-        <div class="chart-container">
-            <canvas id="deptChart"></canvas>
-        </div>
+        <h1>Penggunaan Kertas Departemen 1 (ADM)</h1>
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
                         <th>Jan</th>
-                        <th>Jumlah Kertas Digunakan</th>
-                        <th>Pegawai</th>
+                        <th>Sheets of Paper Used</th>
+                        <th>Employee</th>
                     </tr>
                 </thead>
-                <tbody id="deptData">
+                <tbody id="admData">
                     <!-- Data akan dimuat secara dinamis -->
                 </tbody>
             </table>
         </div>
+        <div class="chart-container">
+            <canvas id="admChart"></canvas>
+        </div>
     </main>
     <footer>
-        <p>&copy; 2024 PT United Tractors Cabang Surabaya. Semua hak dilindungi.</p>
+        <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const deptData = document.getElementById('deptData');
-            const ctx = document.getElementById('deptChart').getContext('2d');
+            const admData = document.getElementById('admData');
+            const ctx = document.getElementById('admChart').getContext('2d');
             const data = [
-                { jan: 1, sheets: 400, employee: 'Farah Wijaya' },
-                { jan: 2, sheets: 400, employee: 'Eko Sari' },
-                { jan: 3, sheets: 1000, employee: 'Intan Prasetyo' },
-                { jan: 4, sheets: 500, employee: 'Andi Wijaya' },
-                { jan: 5, sheets: 200, employee: 'Joko Saputra' },
+                { month: 1, sheets: 400, employee: 'Farah Wijaya' },
+                { month: 2, sheets: 400, employee: 'Eko Sari' },
+                { month: 3, sheets: 1000, employee: 'Intan Prasetyo' },
+                { month: 4, sheets: 500, employee: 'Andi Wijaya' },
+                { month: 5, sheets: 200, employee: 'Joko Saputra' }
             ];
 
             data.forEach(row => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${row.jan}</td><td>${row.sheets}</td><td>${row.employee}</td>`;
-                deptData.appendChild(tr);
+                tr.innerHTML = `<td>${row.month}</td><td>${row.sheets}</td><td>${row.employee}</td>`;
+                admData.appendChild(tr);
             });
 
             const chart = new Chart(ctx, {
@@ -68,9 +68,9 @@
                     labels: data.map(row => row.employee),
                     datasets: [
                         {
-                            label: 'Jumlah Kertas Digunakan',
+                            label: 'Sheets of Paper Used',
                             data: data.map(row => row.sheets),
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
                             borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 1
                         }
