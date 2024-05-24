@@ -3,62 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penggunaan Kertas Selama Satu Tahun</title>
+    <title>Selama Satu Tahun - Monitoring Emisi Karbon dan Penggunaan Kertas</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Monitoring Emisi Karbon dan Penggunaan Kertas</h1>
+    <header class="main-header">
+        <div class="container">
+            <img src="images/logo_with_border.png" alt="Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="selama_satu_tahun.html">Selama Satu Tahun</a></li>
+                    <!-- Tambahkan menu lainnya jika perlu -->
+                </ul>
+            </nav>
+        </div>
     </header>
-    <div class="container">
-        <h1>Penggunaan Kertas Selama Satu Tahun</h1>
-        <div class="back-button">
-            <button onclick="window.location.href='index.html'">Kembali ke Halaman Utama</button>
+    <main>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bulan</th>
+                        <th>ADM</th>
+                        <th>Sparepart</th>
+                        <th>Service</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Januari</td><td>2500</td><td>5500</td><td>4500</td></tr>
+                    <tr><td>Februari</td><td>4500</td><td>1000</td><td>1500</td></tr>
+                    <tr><td>Maret</td><td>500</td><td>2000</td><td>3000</td></tr>
+                    <tr><td>April</td><td>3000</td><td>3500</td><td>2000</td></tr>
+                    <tr><td>Mei</td><td>500</td><td>500</td><td>4500</td></tr>
+                    <tr><td>Juni</td><td>4000</td><td>2500</td><td>1500</td></tr>
+                    <tr><td>Juli</td><td>2500</td><td>2500</td><td>2000</td></tr>
+                    <tr><td>Agustus</td><td>1000</td><td>4500</td><td>1500</td></tr>
+                    <tr><td>September</td><td>500</td><td>3000</td><td>2500</td></tr>
+                    <tr><td>Oktober</td><td>3000</td><td>4500</td><td>2500</td></tr>
+                    <tr><td>November</td><td>4000</td><td>4500</td><td>3500</td></tr>
+                    <tr><td>Desember</td><td>4000</td><td>4500</td><td>3500</td></tr>
+                </tbody>
+            </table>
         </div>
         <div class="chart-container">
-            <h2>Grafik Penggunaan Kertas</h2>
             <canvas id="paperUsageChart"></canvas>
         </div>
-    </div>
+    </main>
     <footer>
         <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
     </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        const data = {
-            labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-            usage: [1200, 1100, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200] // Data simulasi
-        };
-
-        function buatGrafik() {
-            var ctx = document.getElementById('paperUsageChart').getContext('2d');
-            var chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.labels,
-                    datasets: [{
-                        label: 'Penggunaan Kertas (lembar)',
-                        data: data.usage,
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+        const ctx = document.getElementById('paperUsageChart').getContext('2d');
+        const paperUsageChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                datasets: [{
+                    label: 'ADM',
+                    data: [2500, 4500, 500, 3000, 500, 4000, 2500, 1000, 500, 3000, 4000, 4000],
+                    borderColor: 'blue',
+                    fill: false
+                }, {
+                    label: 'Sparepart',
+                    data: [5500, 1000, 2000, 3500, 500, 2500, 2500, 4500, 3000, 4500, 4500, 4500],
+                    borderColor: 'red',
+                    fill: false
+                }, {
+                    label: 'Service',
+                    data: [4500, 1500, 3000, 2000, 4500, 1500, 2000, 1500, 2500, 2500, 3500, 3500],
+                    borderColor: 'green',
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Bulan'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Jumlah Kertas (lembar)'
                         }
                     }
                 }
-            });
-        }
-
-        window.onload = function() {
-            buatGrafik();
-        };
+            }
+        });
     </script>
 </body>
 </html>
