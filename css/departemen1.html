@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penggunaan Kertas Departemen 1</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
@@ -22,18 +22,16 @@
     <main>
         <h1>Penggunaan Kertas Departemen 1</h1>
         <div class="form-container">
-            <form id="inputForm">
-                <label for="month">Bulan:</label>
-                <input type="text" id="month" name="month" required>
-                <label for="sheets">Jumlah Kertas Digunakan:</label>
-                <input type="number" id="sheets" name="sheets" required>
-                <label for="employee">Nama Karyawan:</label>
-                <input type="text" id="employee" name="employee" required>
-                <button type="submit">Tambah Data</button>
+            <form id="paperUsageForm">
+                <label for="employeeName">Nama Karyawan:</label>
+                <input type="text" id="employeeName" name="employeeName" required>
+                <label for="paperUsed">Jumlah Kertas Digunakan:</label>
+                <input type="number" id="paperUsed" name="paperUsed" required>
+                <button type="submit">Tambahkan</button>
             </form>
         </div>
         <div class="table-container">
-            <table>
+            <table id="paperUsageTable">
                 <thead>
                     <tr>
                         <th>Bulan</th>
@@ -41,13 +39,13 @@
                         <th>Nama Karyawan</th>
                     </tr>
                 </thead>
-                <tbody id="dataBody">
+                <tbody id="paperUsageData">
                     <!-- Data akan dimuat secara dinamis -->
                 </tbody>
             </table>
         </div>
-        <div class="chart-container" style="width: 80%; margin: auto;">
-            <canvas id="departmentChart"></canvas>
+        <div class="chart-container">
+            <canvas id="paperUsageChart"></canvas>
         </div>
     </main>
     <footer>
@@ -56,33 +54,47 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const data = [
-                { month: 'Jan', sheets: 400, employee: 'Farah Wijaya' },
-                { month: 'Jan', sheets: 400, employee: 'Eko Sari' },
-                { month: 'Jan', sheets: 1000, employee: 'Intan Prasetyo' },
-                { month: 'Jan', sheets: 500, employee: 'Andi Wijaya' },
-                { month: 'Jan', sheets: 200, employee: 'Joko Saputra' },
-            ];
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('paperUsageForm');
+            const tableBody = document.getElementById('paperUsageData');
+            const ctx = document.getElementById('paperUsageChart').getContext('2d');
+            let paperUsageData = JSON.parse(localStorage.getItem('paperUsageData')) || [];
 
-            const dataBody = document.getElementById('dataBody');
-            const ctx = document.getElementById('departmentChart').getContext('2d');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                const employeeName = document.getElementById('employeeName').value;
+                const paperUsed = parseInt(document.getElementById('paperUsed').value);
 
-            function updateTableAndChart() {
-                dataBody.innerHTML = '';
-                data.forEach((row, index) => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `<td>${row.month}</td><td>${row.sheets}</td><td>${row.employee}</td>`;
-                    dataBody.appendChild(tr);
+                paperUsageData.push({ employeeName, paperUsed });
+                localStorage.setItem('paperUsageData', JSON.stringify(paperUsageData));
+                updateTable();
+                updateChart();
+            });
+
+            function updateTable() {
+                tableBody.innerHTML = '';
+                paperUsageData.forEach((data, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>Jan</td><td>${data.paperUsed}</td><td>${data.employeeName}</td>`;
+                    tableBody.appendChild(row);
                 });
+            }
 
-                const chart = new Chart(ctx, {
+            function updateChart() {
+                const labels = paperUsageData.map(data => data.employeeName);
+                const data = paperUsageData.map(data => data.paperUsed);
+
+                if (window.myChart) {
+                    window.myChart.destroy();
+                }
+
+                window.myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: data.map(row => row.employee),
+                        labels: labels,
                         datasets: [{
                             label: 'Jumlah Kertas Digunakan',
-                            data: data.map(row => row.sheets),
+                            data: data,
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 1
@@ -98,19 +110,9 @@
                 });
             }
 
-            document.getElementById('inputForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const month = document.getElementById('month').value;
-                const sheets = document.getElementById('sheets').value;
-                const employee = document.getElementById('employee').value;
-
-                data.push({ month, sheets: Number(sheets), employee });
-                updateTableAndChart();
-
-                document.getElementById('inputForm').reset();
-            });
-
-            updateTableAndChart();
+            // Inisialisasi tabel dan chart saat halaman dimuat
+            updateTable();
+            updateChart();
         });
     </script>
 </body>
