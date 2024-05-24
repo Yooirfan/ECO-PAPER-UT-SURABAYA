@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Penggunaan Kertas Departemen 1</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <header class="main-header">
         <div class="container">
-            <img src="../images/logo_with_border.png" alt="Logo" class="logo">
+            <img src="images/logo_with_border.png" alt="Logo" class="logo">
             <nav>
                 <ul>
-                    <li><a href="../index.html">Beranda</a></li>
+                    <li><a href="index.html">Beranda</a></li>
                     <li><a href="#">Penggunaan Kertas Departemen 1</a></li>
                 </ul>
             </nav>
@@ -21,6 +21,17 @@
     </header>
     <main>
         <h1>Penggunaan Kertas Departemen 1</h1>
+        <div class="form-container">
+            <form id="inputForm">
+                <label for="month">Bulan:</label>
+                <input type="text" id="month" name="month" required>
+                <label for="sheets">Jumlah Kertas Digunakan:</label>
+                <input type="number" id="sheets" name="sheets" required>
+                <label for="employee">Nama Karyawan:</label>
+                <input type="text" id="employee" name="employee" required>
+                <button type="submit">Tambah Data</button>
+            </form>
+        </div>
         <div class="table-container">
             <table>
                 <thead>
@@ -30,37 +41,13 @@
                         <th>Nama Karyawan</th>
                     </tr>
                 </thead>
-                <tbody id="dept1Data">
-                    <tr>
-                        <td>Jan</td>
-                        <td>400</td>
-                        <td>Farah Wijaya</td>
-                    </tr>
-                    <tr>
-                        <td>Jan</td>
-                        <td>400</td>
-                        <td>Eko Sari</td>
-                    </tr>
-                    <tr>
-                        <td>Jan</td>
-                        <td>1000</td>
-                        <td>Intan Prasetyo</td>
-                    </tr>
-                    <tr>
-                        <td>Jan</td>
-                        <td>500</td>
-                        <td>Andi Wijaya</td>
-                    </tr>
-                    <tr>
-                        <td>Jan</td>
-                        <td>200</td>
-                        <td>Joko Saputra</td>
-                    </tr>
+                <tbody id="dataBody">
+                    <!-- Data akan dimuat secara dinamis -->
                 </tbody>
             </table>
         </div>
-        <div class="chart-container">
-            <canvas id="dept1Chart"></canvas>
+        <div class="chart-container" style="width: 80%; margin: auto;">
+            <canvas id="departmentChart"></canvas>
         </div>
     </main>
     <footer>
@@ -70,29 +57,60 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const ctx = document.getElementById('dept1Chart').getContext('2d');
-            const data = {
-                labels: ['Farah Wijaya', 'Eko Sari', 'Intan Prasetyo', 'Andi Wijaya', 'Joko Saputra'],
-                datasets: [{
-                    label: 'Jumlah Kertas Digunakan',
-                    data: [400, 400, 1000, 500, 200],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            };
-            const config = {
-                type: 'bar',
-                data: data,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+            const data = [
+                { month: 'Jan', sheets: 400, employee: 'Farah Wijaya' },
+                { month: 'Jan', sheets: 400, employee: 'Eko Sari' },
+                { month: 'Jan', sheets: 1000, employee: 'Intan Prasetyo' },
+                { month: 'Jan', sheets: 500, employee: 'Andi Wijaya' },
+                { month: 'Jan', sheets: 200, employee: 'Joko Saputra' },
+            ];
+
+            const dataBody = document.getElementById('dataBody');
+            const ctx = document.getElementById('departmentChart').getContext('2d');
+
+            function updateTableAndChart() {
+                dataBody.innerHTML = '';
+                data.forEach((row, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${row.month}</td><td>${row.sheets}</td><td>${row.employee}</td>`;
+                    dataBody.appendChild(tr);
+                });
+
+                const chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.map(row => row.employee),
+                        datasets: [{
+                            label: 'Jumlah Kertas Digunakan',
+                            data: data.map(row => row.sheets),
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            };
-            new Chart(ctx, config);
+                });
+            }
+
+            document.getElementById('inputForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const month = document.getElementById('month').value;
+                const sheets = document.getElementById('sheets').value;
+                const employee = document.getElementById('employee').value;
+
+                data.push({ month, sheets: Number(sheets), employee });
+                updateTableAndChart();
+
+                document.getElementById('inputForm').reset();
+            });
+
+            updateTableAndChart();
         });
     </script>
 </body>
