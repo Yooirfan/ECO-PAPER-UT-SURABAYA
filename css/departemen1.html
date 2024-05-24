@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penggunaan Kertas Departemen 1 (ADM)</title>
+    <title>Penggunaan Kertas Departemen 1</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
@@ -20,7 +20,10 @@
         </div>
     </header>
     <main>
-        <h1>Penggunaan Kertas Departemen 1 (ADM)</h1>
+        <h1>Penggunaan Kertas Departemen 1</h1>
+        <div class="chart-container">
+            <canvas id="dept1Chart"></canvas>
+        </div>
         <div class="table-container">
             <table>
                 <thead>
@@ -30,13 +33,10 @@
                         <th>Employee</th>
                     </tr>
                 </thead>
-                <tbody id="admData">
+                <tbody id="dept1Data">
                     <!-- Data akan dimuat secara dinamis -->
                 </tbody>
             </table>
-        </div>
-        <div class="chart-container">
-            <canvas id="admChart"></canvas>
         </div>
     </main>
     <footer>
@@ -46,35 +46,33 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const admData = document.getElementById('admData');
-            const ctx = document.getElementById('admChart').getContext('2d');
+            const dept1Data = document.getElementById('dept1Data');
+            const ctx = document.getElementById('dept1Chart').getContext('2d');
             const data = [
-                { month: 1, sheets: 400, employee: 'Farah Wijaya' },
-                { month: 2, sheets: 400, employee: 'Eko Sari' },
-                { month: 3, sheets: 1000, employee: 'Intan Prasetyo' },
-                { month: 4, sheets: 500, employee: 'Andi Wijaya' },
-                { month: 5, sheets: 200, employee: 'Joko Saputra' }
+                { month: 'Jan', sheets: 400, employee: 'Farah Wijaya' },
+                { month: 'Jan', sheets: 400, employee: 'Eko Sari' },
+                { month: 'Jan', sheets: 1000, employee: 'Intan Prasetyo' },
+                { month: 'Jan', sheets: 500, employee: 'Andi Wijaya' },
+                { month: 'Jan', sheets: 200, employee: 'Joko Saputra' },
             ];
 
             data.forEach(row => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `<td>${row.month}</td><td>${row.sheets}</td><td>${row.employee}</td>`;
-                admData.appendChild(tr);
+                dept1Data.appendChild(tr);
             });
 
             const chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: data.map(row => row.employee),
-                    datasets: [
-                        {
-                            label: 'Sheets of Paper Used',
-                            data: data.map(row => row.sheets),
-                            backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }
-                    ]
+                    datasets: [{
+                        label: 'Sheets of Paper Used',
+                        data: data.map(row => row.sheets),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
                 },
                 options: {
                     scales: {
