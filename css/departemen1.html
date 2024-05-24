@@ -3,46 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penggunaan Kertas Departemen 1</title>
+    <title>Penggunaan Kertas Departemen ADM</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Monitoring Emisi Karbon dan Penggunaan Kertas</h1>
+    <header class="main-header">
+        <div class="container">
+            <img src="images/logo_with_border.png" alt="Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#">Penggunaan Kertas Departemen ADM</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
-    <div class="container">
-        <h1>Penggunaan Kertas Departemen 1</h1>
-        <div class="back-button">
-            <button onclick="window.location.href='index.html'">Kembali ke Halaman Utama</button>
-        </div>
-        <div id="data-departemen" class="table-container">
-            <div class="table-caption">Data Penggunaan Kertas</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Bulan</th>
-                        <th>Penggunaan (lembar)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Januari</td><td>1000</td></tr>
-                    <tr><td>Februari</td><td>1100</td></tr>
-                    <tr><td>Maret</td><td>1200</td></tr>
-                    <tr><td>April</td><td>1300</td></tr>
-                    <tr><td>Mei</td><td>1400</td></tr>
-                    <tr><td>Juni</td><td>1500</td></tr>
-                    <tr><td>Juli</td><td>1600</td></tr>
-                    <tr><td>Agustus</td><td>1700</td></tr>
-                    <tr><td>September</td><td>1800</td></tr>
-                    <tr><td>Oktober</td><td>1900</td></tr>
-                    <tr><td>November</td><td>2000</td></tr>
-                    <tr><td>Desember</td><td>2100</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <main>
+        <h1>Penggunaan Kertas Departemen ADM</h1>
+        <table id="paperUsageTable">
+            <thead>
+                <tr>
+                    <th>Jan</th>
+                    <th>Sheets of Paper Used</th>
+                    <th>Employee</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td contenteditable="true">400</td>
+                    <td contenteditable="true">Farah Wijaya</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td contenteditable="true">400</td>
+                    <td contenteditable="true">Eko Sari</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td contenteditable="true">1000</td>
+                    <td contenteditable="true">Intan Prasetyo</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td contenteditable="true">500</td>
+                    <td contenteditable="true">Andi Wijaya</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td contenteditable="true">200</td>
+                    <td contenteditable="true">Joko Saputra</td>
+                </tr>
+            </tbody>
+        </table>
+        <canvas id="paperUsageChart" width="400" height="200"></canvas>
+    </main>
     <footer>
         <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const ctx = document.getElementById('paperUsageChart').getContext('2d');
+            const table = document.getElementById('paperUsageTable').getElementsByTagName('tbody')[0];
+            const data = Array.from(table.getElementsByTagName('tr')).map(row => {
+                return {
+                    employee: row.cells[2].innerText,
+                    sheets: parseInt(row.cells[1].innerText)
+                };
+            });
+
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: data.map(d => d.employee),
+                    datasets: [{
+                        label: 'Sheets of Paper Used',
+                        data: data.map(d => d.sheets),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            table.addEventListener('input', () => {
+                const newData = Array.from(table.getElementsByTagName('tr')).map(row => {
+                    return {
+                        employee: row.cells[2].innerText,
+                        sheets: parseInt(row.cells[1].innerText)
+                    };
+                });
+                chart.data.labels = newData.map(d => d.employee);
+                chart.data.datasets[0].data = newData.map(d => d.sheets);
+                chart.update();
+            });
+        });
+    </script>
 </body>
 </html>
