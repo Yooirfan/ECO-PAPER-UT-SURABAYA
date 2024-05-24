@@ -3,91 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penggunaan Kertas Departemen ADM</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>ADM Department Paper Usage</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
     <header class="main-header">
         <div class="container">
-            <img src="../images/logo_with_border.png" alt="Logo" class="logo">
+            <img src="images/logo_with_border.png" alt="Logo" class="logo">
             <nav>
                 <ul>
-                    <li><a href="../index.html">Efisiensi Penggunaan Kertas untuk Mengurangi Emisi Karbon dan Menghijaukan Bumi</a></li>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="#">ADM Department Paper Usage</a></li>
                 </ul>
             </nav>
         </div>
     </header>
     <main>
-        <h1>Penggunaan Kertas Departemen ADM</h1>
-        <div class="table-container">
-            <table id="paperUsageTable">
-                <thead>
-                    <tr>
-                        <th>Jan</th>
-                        <th>Sheets of Paper Used</th>
-                        <th>Employee</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td contenteditable="true">400</td>
-                        <td contenteditable="true">Farah Wijaya</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td contenteditable="true">400</td>
-                        <td contenteditable="true">Eko Sari</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td contenteditable="true">1000</td>
-                        <td contenteditable="true">Intan Prasetyo</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td contenteditable="true">500</td>
-                        <td contenteditable="true">Andi Wijaya</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td contenteditable="true">200</td>
-                        <td contenteditable="true">Joko Saputra</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <h1>ADM Department Paper Usage</h1>
         <div class="chart-container">
-            <canvas id="paperUsageChart"></canvas>
+            <canvas id="deptChart"></canvas>
         </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Jan</th>
+                    <th>Sheets of Paper Used</th>
+                    <th>Employee</th>
+                </tr>
+            </thead>
+            <tbody id="deptData">
+                <!-- Data will be dynamically loaded -->
+            </tbody>
+        </table>
     </main>
     <footer>
         <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const ctx = document.getElementById('paperUsageChart').getContext('2d');
-            const table = document.getElementById('paperUsageTable').getElementsByTagName('tbody')[0];
-            const data = Array.from(table.getElementsByTagName('tr')).map(row => {
-                return {
-                    employee: row.cells[2].innerText,
-                    sheets: parseInt(row.cells[1].innerText)
-                };
+        document.addEventListener("DOMContentLoaded", function() {
+            const deptData = document.getElementById('deptData');
+            const ctx = document.getElementById('deptChart').getContext('2d');
+            const data = [
+                { jan: 1, sheets: 400, employee: 'Farah Wijaya' },
+                { jan: 2, sheets: 400, employee: 'Eko Sari' },
+                { jan: 3, sheets: 1000, employee: 'Intan Prasetyo' },
+                { jan: 4, sheets: 500, employee: 'Andi Wijaya' },
+                { jan: 5, sheets: 200, employee: 'Joko Saputra' },
+            ];
+
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${row.jan}</td><td>${row.sheets}</td><td>${row.employee}</td>`;
+                deptData.appendChild(tr);
             });
 
             const chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: data.map(d => d.employee),
-                    datasets: [{
-                        label: 'Sheets of Paper Used',
-                        data: data.map(d => d.sheets),
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    }]
+                    labels: data.map(row => row.employee),
+                    datasets: [
+                        {
+                            label: 'Sheets of Paper Used',
+                            data: data.map(row => row.sheets),
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }
+                    ]
                 },
                 options: {
                     scales: {
@@ -96,18 +81,6 @@
                         }
                     }
                 }
-            });
-
-            table.addEventListener('input', () => {
-                const newData = Array.from(table.getElementsByTagName('tr')).map(row => {
-                    return {
-                        employee: row.cells[2].innerText,
-                        sheets: parseInt(row.cells[1].innerText)
-                    };
-                });
-                chart.data.labels = newData.map(d => d.employee);
-                chart.data.datasets[0].data = newData.map(d => d.sheets);
-                chart.update();
             });
         });
     </script>
