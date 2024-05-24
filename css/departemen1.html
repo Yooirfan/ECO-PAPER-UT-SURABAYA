@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADM Department Paper Usage</title>
+    <title>Penggunaan Kertas Departemen ADM</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
@@ -14,31 +14,33 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Beranda</a></li>
-                    <li><a href="#">ADM Department Paper Usage</a></li>
+                    <li><a href="#">Penggunaan Kertas Departemen ADM</a></li>
                 </ul>
             </nav>
         </div>
     </header>
     <main>
-        <h1>ADM Department Paper Usage</h1>
+        <h1>Penggunaan Kertas Departemen ADM</h1>
         <div class="chart-container">
             <canvas id="deptChart"></canvas>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Jan</th>
-                    <th>Sheets of Paper Used</th>
-                    <th>Employee</th>
-                </tr>
-            </thead>
-            <tbody id="deptData">
-                <!-- Data will be dynamically loaded -->
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Jan</th>
+                        <th>Jumlah Kertas Digunakan</th>
+                        <th>Pegawai</th>
+                    </tr>
+                </thead>
+                <tbody id="deptData">
+                    <!-- Data akan dimuat secara dinamis -->
+                </tbody>
+            </table>
+        </div>
     </main>
     <footer>
-        <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
+        <p>&copy; 2024 PT United Tractors Cabang Surabaya. Semua hak dilindungi.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -66,7 +68,7 @@
                     labels: data.map(row => row.employee),
                     datasets: [
                         {
-                            label: 'Sheets of Paper Used',
+                            label: 'Jumlah Kertas Digunakan',
                             data: data.map(row => row.sheets),
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             borderColor: 'rgba(54, 162, 235, 1)',
