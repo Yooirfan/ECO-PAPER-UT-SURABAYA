@@ -7,7 +7,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getDatabase, ref, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -26,11 +26,13 @@
     const analytics = getAnalytics(app);
     const database = getDatabase(app);
 
-    // Export functions to be accessible globally
+    // Function to save data
     window.simpanData = function() {
       const emisi = document.getElementById('emisiDepartemen1').value;
-      set(ref(database, 'departemen1/emisi'), {
-        emisi: emisi
+      const timestamp = new Date().toISOString();
+      push(ref(database, 'departemen1/emisi'), {
+        emisi: emisi,
+        timestamp: timestamp
       }).then(() => {
         alert('Data berhasil disimpan');
       }).catch((error) => {
@@ -38,16 +40,18 @@
       });
     }
 
+    // Function to retrieve data
     window.onload = function() {
-      const dbRef = ref(database);
-      get(child(dbRef, 'departemen1/emisi')).then((snapshot) => {
-        if (snapshot.exists()) {
-          document.getElementById('emisiDepartemen1').value = snapshot.val().emisi;
-        } else {
-          console.log("No data available");
+      const dbRef = ref(database, 'departemen1/emisi');
+      onValue(dbRef, (snapshot) => {
+        const data = snapshot.val();
+        const dataList = document.getElementById('dataList');
+        dataList.innerHTML = ''; // Clear previous data
+        for (const id in data) {
+          const listItem = document.createElement('li');
+          listItem.textContent = `Emisi: ${data[id].emisi}, Timestamp: ${data[id].timestamp}`;
+          dataList.appendChild(listItem);
         }
-      }).catch((error) => {
-        console.error(error);
       });
     }
   </script>
@@ -63,6 +67,7 @@
       <h2>Data Emisi Karbon</h2>
       <input type="number" id="emisiDepartemen1" placeholder="Masukkan data emisi" />
       <button onclick="simpanData()">Simpan Data</button>
+      <ul id="dataList"></ul>
     </section>
   </main>
   <footer>
