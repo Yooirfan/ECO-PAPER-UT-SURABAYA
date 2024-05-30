@@ -29,9 +29,11 @@
     // Function to save data
     window.simpanData = function() {
       const emisi = document.getElementById('emisiDepartemen1').value;
+      const nama = document.getElementById('namaPenginput').value;
       const timestamp = new Date().toISOString();
       push(ref(database, 'departemen1/emisi'), {
         emisi: emisi,
+        nama: nama,
         timestamp: timestamp
       }).then(() => {
         alert('Data berhasil disimpan');
@@ -49,7 +51,7 @@
         dataList.innerHTML = ''; // Clear previous data
         for (const id in data) {
           const listItem = document.createElement('li');
-          listItem.textContent = `Emisi: ${data[id].emisi}, Timestamp: ${data[id].timestamp}`;
+          listItem.textContent = `Nama: ${data[id].nama}, Emisi: ${data[id].emisi}, Timestamp: ${data[id].timestamp}`;
           dataList.appendChild(listItem);
         }
       });
@@ -64,14 +66,4 @@
   </header>
   <main>
     <section>
-      <h2>Data Emisi Karbon</h2>
-      <input type="number" id="emisiDepartemen1" placeholder="Masukkan data emisi" />
-      <button onclick="simpanData()">Simpan Data</button>
-      <ul id="dataList"></ul>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2024 Monitoring Emisi Karbon Penggunaan Kertas</p>
-  </footer>
-</body>
-</html>
+      <h2>Data Em
