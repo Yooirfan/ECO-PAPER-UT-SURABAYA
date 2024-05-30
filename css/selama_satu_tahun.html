@@ -1,110 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penggunaan Kertas Selama Satu Tahun</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+  <title>Emisi Karbon Selama Satu Tahun - Monitoring Emisi Karbon</title>
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
+      authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+      projectId: "monitoring-penggunaan-kertas",
+      storageBucket: "monitoring-penggunaan-kertas.appspot.com",
+      messagingSenderId: "925210231739",
+      appId: "1:925210231739:web:95020c2af050c8925bfa9e",
+      measurementId: "G-NRMJL82G79"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const analytics = firebase.analytics();
+    const database = firebase.database();
+
+    // Load data saat halaman dimuat
+    window.onload = function() {
+      firebase.database().ref('departemen1/emisi').once('value').then(function(snapshot) {
+        const emisi1 = snapshot.val() || '0';
+        document.getElementById('emisiDepartemen1').innerText = emisi1;
+      });
+
+      firebase.database().ref('departemen2/emisi').once('value').then(function(snapshot) {
+        const emisi2 = snapshot.val() || '0';
+        document.getElementById('emisiDepartemen2').innerText = emisi2;
+      });
+
+      firebase.database().ref('departemen3/emisi').once('value').then(function(snapshot) {
+        const emisi3 = snapshot.val() || '0';
+        document.getElementById('emisiDepartemen3').innerText = emisi3;
+      });
+    }
+  </script>
 </head>
 <body>
-    <header class="main-header">
-        <div class="container">
-            <img src="../images/logo_with_border.png" alt="Logo" class="logo">
-            <nav>
-                <ul>
-                    <li><a href="../index.html">Beranda</a></li>
-                    <li><a href="#">Penggunaan Kertas Selama Satu Tahun</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <main>
-        <h1>Penggunaan Kertas Selama Satu Tahun</h1>
-        <div class="chart-container" style="width: 80%; margin: auto;">
-            <canvas id="yearlyChart"></canvas>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Bulan</th>
-                    <th>ADM</th>
-                    <th>Sparepart</th>
-                    <th>Service</th>
-                </tr>
-            </thead>
-            <tbody id="yearlyData">
-                <!-- Data akan dimuat secara dinamis -->
-            </tbody>
-        </table>
-    </main>
-    <footer>
-        <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const yearlyData = document.getElementById('yearlyData');
-            const ctx = document.getElementById('yearlyChart').getContext('2d');
-            const data = [
-                { month: 'Januari', adm: 2500, sparepart: 5500, service: 4500 },
-                { month: 'Februari', adm: 4500, sparepart: 1000, service: 1500 },
-                { month: 'Maret', adm: 500, sparepart: 2000, service: 3000 },
-                { month: 'April', adm: 3000, sparepart: 3500, service: 2000 },
-                { month: 'Mei', adm: 500, sparepart: 500, service: 4500 },
-                { month: 'Juni', adm: 4000, sparepart: 2500, service: 1500 },
-                { month: 'Juli', adm: 2500, sparepart: 2500, service: 2000 },
-                { month: 'Agustus', adm: 1000, sparepart: 4500, service: 1500 },
-                { month: 'September', adm: 500, sparepart: 4000, service: 3000 },
-                { month: 'Oktober', adm: 3000, sparepart: 4500, service: 2500 },
-                { month: 'November', adm: 2000, sparepart: 2500, service: 3000 },
-                { month: 'Desember', adm: 4000, sparepart: 4500, service: 3500 },
-            ];
-
-            data.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td>${row.month}</td><td>${row.adm}</td><td>${row.sparepart}</td><td>${row.service}</td>`;
-                yearlyData.appendChild(tr);
-            });
-
-            const chart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: data.map(row => row.month),
-                    datasets: [
-                        {
-                            label: 'ADM',
-                            data: data.map(row => row.adm),
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            fill: false
-                        },
-                        {
-                            label: 'Sparepart',
-                            data: data.map(row => row.sparepart),
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            fill: false
-                        },
-                        {
-                            label: 'Service',
-                            data: data.map(row => row.service),
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            fill: false
-                        }
-                    ]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        });
-    </script>
+  <header>
+    <h1>Emisi Karbon Selama Satu Tahun</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Data Emisi Karbon</h2>
+      <p>Departemen 1: <span id="emisiDepartemen1">0</span> kg</p>
+      <p>Departemen 2: <span id="emisiDepartemen2">0</span> kg</p>
+      <p>Departemen 3: <span id="emisiDepartemen3">0</span> kg</p>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Monitoring Emisi Karbon Penggunaan Kertas</p>
+  </footer>
 </body>
 </html>
