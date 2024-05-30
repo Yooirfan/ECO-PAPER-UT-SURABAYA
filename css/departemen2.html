@@ -1,59 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penggunaan Kertas Departemen 2</title>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        th {
-            background-color: #e6f7ff; /* Light Blue */
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADM Department - Monitoring Penggunaan Kertas</title>
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
+      authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+      databaseURL: "https://monitoring-penggunaan-kertas-default-rtdb.asia-southeast1.firebasedatabase.app", // URL yang benar
+      projectId: "monitoring-penggunaan-kertas",
+      storageBucket: "monitoring-penggunaan-kertas.appspot.com",
+      messagingSenderId: "925210231739",
+      appId: "1:925210231739:web:95020c2af050c8925bfa9e",
+      measurementId: "G-NRMJL82G79"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const database = getDatabase(app);
+
+    // Function to save data
+    window.simpanData = function() {
+      const penggunaanKertas = document.getElementById('penggunaanKertas').value;
+      const nama = document.getElementById('namaPenginput').value;
+      const timestamp = new Date().toISOString();
+      push(ref(database, 'Sparepart_department/penggunaanKertas'), {
+        penggunaanKertas: penggunaanKertas,
+        nama: nama,
+        timestamp: timestamp
+      }).then(() => {
+        alert('Data berhasil disimpan');
+      }).catch((error) => {
+        alert('Gagal menyimpan data: ' + error);
+      });
+    }
+
+    // Function to delete data
+    window.hapusData = function(id) {
+      remove(ref(database, `Sparepart_department/penggunaanKertas/${id}`)).then(() => {
+        alert('Data berhasil dihapus');
+      }).catch((error) => {
+        alert('Gagal menghapus data: ' + error);
+      });
+    }
+
+    // Function to retrieve data
+    window.onload = function() {
+      const dbRef = ref(database, 'Sparepart_department/penggunaanKertas');
+      onValue(dbRef, (snapshot) => {
+        const data = snapshot.val();
+        const dataList = document.getElementById('dataList');
+        dataList.innerHTML = ''; // Clear previous data
+        for (const id in data) {
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `Nama: ${data[id].nama}, Penggunaan Kertas: ${data[id].penggunaanKertas}, Timestamp: ${data[id].timestamp} 
+          <button onclick="hapusData('${id}')">Hapus</button>`;
+          dataList.appendChild(listItem);
         }
-        .back-button button {
-            background-color: #0099cc; /* Blue */
-        }
-        .back-button button:hover {
-            background-color: #007399;
-        }
-    </style>
+      });
+    }
+  </script>
 </head>
 <body>
-    <header>
-        <h1>Monitoring Emisi Karbon dan Penggunaan Kertas</h1>
-    </header>
+  <header class="main-header">
     <div class="container">
-        <h1>Penggunaan Kertas Departemen 2</h1>
-        <div class="back-button">
-            <button onclick="window.location.href='index.html'">Kembali ke Halaman Utama</button>
-        </div>
-        <div id="data-departemen" class="table-container">
-            <div class="table-caption">Data Penggunaan Kertas</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Bulan</th>
-                        <th>Penggunaan (lembar)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>Januari</td><td>1000</td></tr>
-                    <tr><td>Februari</td><td>1100</td></tr>
-                    <tr><td>Maret</td><td>1200</td></tr>
-                    <tr><td>April</td><td>1300</td></tr>
-                    <tr><td>Mei</td><td>1400</td></tr>
-                    <tr><td>Juni</td><td>1500</td></tr>
-                    <tr><td>Juli</td><td>1600</td></tr>
-                    <tr><td>Agustus</td><td>1700</td></tr>
-                    <tr><td>September</td><td>1800</td></tr>
-                    <tr><td>Oktober</td><td>1900</td></tr>
-                    <tr><td>November</td><td>2000</td></tr>
-                    <tr><td>Desember</td><td>2100</td></tr>
-                </tbody>
-            </table>
-        </div>
+      <h1>Sparepart Department</h1>
     </div>
-    <footer>
-        <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
-    </footer>
+  </header>
+  <main>
+    <section>
+      <h2>Data Penggunaan Kertas</h2>
+      <input type="text" id="namaPenginput" placeholder="Masukkan nama Anda" />
+      <input type="number" id="penggunaanKertas" placeholder="Masukkan data penggunaan kertas" />
+      <button onclick="simpanData()">Simpan Data</button>
+      <ul id="dataList"></ul>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
+  </footer>
 </body>
 </html>
