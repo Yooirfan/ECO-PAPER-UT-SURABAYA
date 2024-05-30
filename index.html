@@ -58,4 +58,37 @@
             </div>
             <h1>Monitoring Penggunaan Kertas</h1>
         </div>
-        <div class="cta-button-cont
+        <div class="cta-button-container">
+            <a href="css/selama_satu_tahun.html"><button class="cta-button">Selama Satu Tahun</button></a>
+            <a href="css/departemen1.html"><button class="cta-button">Departemen 1</button></a>
+            <a href="css/departemen2.html"><button class="cta-button">Departemen 2</button></a>
+            <a href="css/departemen3.html"><button class="cta-button">Departemen 3</button></a>
+            <a href="css/konversi_kg_ke_kgco2.html"><button class="cta-button">Konversi KG ke KGCO2</button></a>
+            <a href="css/konversi_emisi_karbon_ke_pohon_dan_biaya.html"><button class="cta-button">Konversi Emisi Karbon ke Pohon dan Biaya</button></a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 10000); // Change image every 10 seconds
+        }
+    </script>
+</body>
+</html>
