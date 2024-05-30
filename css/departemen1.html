@@ -3,10 +3,12 @@
 <head>
   <title>Departemen 1 - Monitoring Emisi Karbon</title>
   <link rel="stylesheet" type="text/css" href="../css/style.css">
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
-  <script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+    import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
     // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
@@ -19,30 +21,41 @@
     };
 
     // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const analytics = firebase.analytics();
-    const database = firebase.database();
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const database = getDatabase(app);
 
     function simpanData() {
       const emisi = document.getElementById('emisiDepartemen1').value;
-      firebase.database().ref('departemen1/emisi').set(emisi);
-      alert('Data berhasil disimpan');
+      set(ref(database, 'departemen1/emisi'), {
+        emisi: emisi
+      }).then(() => {
+        alert('Data berhasil disimpan');
+      }).catch((error) => {
+        alert('Gagal menyimpan data: ' + error);
+      });
     }
 
     // Load data saat halaman dimuat
     window.onload = function() {
-      firebase.database().ref('departemen1/emisi').once('value').then(function(snapshot) {
-        const emisi = snapshot.val();
-        if (emisi) {
-          document.getElementById('emisiDepartemen1').value = emisi;
+      const dbRef = ref(database);
+      get(child(dbRef, 'departemen1/emisi')).then((snapshot) => {
+        if (snapshot.exists()) {
+          document.getElementById('emisiDepartemen1').value = snapshot.val().emisi;
+        } else {
+          console.log("No data available");
         }
+      }).catch((error) => {
+        console.error(error);
       });
     }
   </script>
 </head>
 <body>
-  <header>
-    <h1>Departemen 1</h1>
+  <header class="main-header">
+    <div class="container">
+      <h1>Departemen 1</h1>
+    </div>
   </header>
   <main>
     <section>
