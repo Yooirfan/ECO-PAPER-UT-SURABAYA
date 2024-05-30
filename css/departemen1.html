@@ -13,6 +13,7 @@
     const firebaseConfig = {
       apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
       authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+      databaseURL: "https://monitoring-penggunaan-kertas-default-rtdb.firebaseio.com/",  // Pastikan URL ini benar
       projectId: "monitoring-penggunaan-kertas",
       storageBucket: "monitoring-penggunaan-kertas.appspot.com",
       messagingSenderId: "925210231739",
@@ -25,7 +26,8 @@
     const analytics = getAnalytics(app);
     const database = getDatabase(app);
 
-    function simpanData() {
+    // Export functions to be accessible globally
+    window.simpanData = function() {
       const emisi = document.getElementById('emisiDepartemen1').value;
       set(ref(database, 'departemen1/emisi'), {
         emisi: emisi
@@ -36,7 +38,6 @@
       });
     }
 
-    // Load data saat halaman dimuat
     window.onload = function() {
       const dbRef = ref(database);
       get(child(dbRef, 'departemen1/emisi')).then((snapshot) => {
