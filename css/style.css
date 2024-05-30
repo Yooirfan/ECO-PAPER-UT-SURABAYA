@@ -14,7 +14,7 @@ body {
 }
 
 header {
-  background-color: #4CAF50;
+  background-color: #333; /* Ubah warna header menjadi gelap */
   color: white;
   text-align: center;
   padding: 1em 0;
@@ -47,6 +47,7 @@ header {
 .hero {
   text-align: center;
   padding: 50px 0;
+  position: relative; /* Menambah position relative untuk tumpukan teks dan gambar */
 }
 
 .slideshow-container {
@@ -118,4 +119,17 @@ footer {
   width: 90%;
   margin: auto;
   max-width: 1200px;
+}
+
+/* New CSS to ensure text is on top of images in hero section */
+.hero h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2.5em;
+  background: rgba(0, 0, 0, 0.5); /* Background semi-transparan */
+  padding: 10px 20px;
+  border-radius: 10px;
 }
