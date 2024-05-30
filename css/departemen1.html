@@ -1,119 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penggunaan Kertas Departemen 1</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <title>Departemen 1 - Monitoring Emisi Karbon</title>
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
+      authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+      projectId: "monitoring-penggunaan-kertas",
+      storageBucket: "monitoring-penggunaan-kertas.appspot.com",
+      messagingSenderId: "925210231739",
+      appId: "1:925210231739:web:95020c2af050c8925bfa9e",
+      measurementId: "G-NRMJL82G79"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const analytics = firebase.analytics();
+    const database = firebase.database();
+
+    function simpanData() {
+      const emisi = document.getElementById('emisiDepartemen1').value;
+      firebase.database().ref('departemen1/emisi').set(emisi);
+      alert('Data berhasil disimpan');
+    }
+
+    // Load data saat halaman dimuat
+    window.onload = function() {
+      firebase.database().ref('departemen1/emisi').once('value').then(function(snapshot) {
+        const emisi = snapshot.val();
+        if (emisi) {
+          document.getElementById('emisiDepartemen1').value = emisi;
+        }
+      });
+    }
+  </script>
 </head>
 <body>
-    <header class="main-header">
-        <div class="container">
-            <img src="images/logo_with_border.png" alt="Logo" class="logo">
-            <nav>
-                <ul>
-                    <li><a href="index.html">Beranda</a></li>
-                    <li><a href="#">Penggunaan Kertas Departemen 1</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
-    <main>
-        <h1>Penggunaan Kertas Departemen 1</h1>
-        <div class="form-container">
-            <form id="paperUsageForm">
-                <label for="employeeName">Nama Karyawan:</label>
-                <input type="text" id="employeeName" name="employeeName" required>
-                <label for="paperUsed">Jumlah Kertas Digunakan:</label>
-                <input type="number" id="paperUsed" name="paperUsed" required>
-                <button type="submit">Tambahkan</button>
-            </form>
-        </div>
-        <div class="table-container">
-            <table id="paperUsageTable">
-                <thead>
-                    <tr>
-                        <th>Bulan</th>
-                        <th>Jumlah Kertas Digunakan</th>
-                        <th>Nama Karyawan</th>
-                    </tr>
-                </thead>
-                <tbody id="paperUsageData">
-                    <!-- Data akan dimuat secara dinamis -->
-                </tbody>
-            </table>
-        </div>
-        <div class="chart-container">
-            <canvas id="paperUsageChart"></canvas>
-        </div>
-    </main>
-    <footer>
-        <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('paperUsageForm');
-            const tableBody = document.getElementById('paperUsageData');
-            const ctx = document.getElementById('paperUsageChart').getContext('2d');
-            let paperUsageData = JSON.parse(localStorage.getItem('paperUsageData')) || [];
-
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-                const employeeName = document.getElementById('employeeName').value;
-                const paperUsed = parseInt(document.getElementById('paperUsed').value);
-
-                paperUsageData.push({ employeeName, paperUsed });
-                localStorage.setItem('paperUsageData', JSON.stringify(paperUsageData));
-                updateTable();
-                updateChart();
-            });
-
-            function updateTable() {
-                tableBody.innerHTML = '';
-                paperUsageData.forEach((data, index) => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `<td>Jan</td><td>${data.paperUsed}</td><td>${data.employeeName}</td>`;
-                    tableBody.appendChild(row);
-                });
-            }
-
-            function updateChart() {
-                const labels = paperUsageData.map(data => data.employeeName);
-                const data = paperUsageData.map(data => data.paperUsed);
-
-                if (window.myChart) {
-                    window.myChart.destroy();
-                }
-
-                window.myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Jumlah Kertas Digunakan',
-                            data: data,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            }
-
-            // Inisialisasi tabel dan chart saat halaman dimuat
-            updateTable();
-            updateChart();
-        });
-    </script>
+  <header>
+    <h1>Departemen 1</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Data Emisi Karbon</h2>
+      <input type="number" id="emisiDepartemen1" placeholder="Masukkan data emisi" />
+      <button onclick="simpanData()">Simpan Data</button>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Monitoring Emisi Karbon Penggunaan Kertas</p>
+  </footer>
 </body>
 </html>
