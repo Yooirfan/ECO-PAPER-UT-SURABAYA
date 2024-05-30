@@ -9,7 +9,7 @@
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
     // Your web app's Firebase configuration
     const firebaseConfig = {
@@ -44,6 +44,15 @@
       });
     }
 
+    // Function to delete data
+    window.hapusData = function(id) {
+      remove(ref(database, `departemen1/emisi/${id}`)).then(() => {
+        alert('Data berhasil dihapus');
+      }).catch((error) => {
+        alert('Gagal menghapus data: ' + error);
+      });
+    }
+
     // Function to retrieve data
     window.onload = function() {
       const dbRef = ref(database, 'departemen1/emisi');
@@ -53,7 +62,8 @@
         dataList.innerHTML = ''; // Clear previous data
         for (const id in data) {
           const listItem = document.createElement('li');
-          listItem.textContent = `Nama: ${data[id].nama}, Emisi: ${data[id].emisi}, Timestamp: ${data[id].timestamp}`;
+          listItem.innerHTML = `Nama: ${data[id].nama}, Emisi: ${data[id].emisi}, Timestamp: ${data[id].timestamp} 
+          <button onclick="hapusData('${id}')">Hapus</button>`;
           dataList.appendChild(listItem);
         }
       });
