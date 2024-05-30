@@ -1,7 +1,9 @@
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  line-height: 1.6;
 }
 
 header {
@@ -15,12 +17,32 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .main-header .logo {
   max-height: 50px;
 }
 
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Hero Section */
 .hero {
   text-align: center;
   padding: 50px 0;
@@ -29,12 +51,45 @@ header {
 .slideshow-container {
   position: relative;
   max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .mySlides {
   display: none;
+  width: 100%;
 }
 
+.mySlides img {
+  width: 100%;
+  vertical-align: middle;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* Fade Animation */
 .fade {
   animation-name: fade;
   animation-duration: 1.5s;
@@ -45,6 +100,7 @@ header {
   to {opacity: 1}
 }
 
+/* CTA Buttons */
 .cta-button-container {
   text-align: center;
   margin: 20px 0;
@@ -58,18 +114,22 @@ header {
   text-transform: uppercase;
   cursor: pointer;
   margin: 5px;
+  font-size: 16px;
+  border-radius: 5px;
 }
 
 .cta-button:hover {
   background-color: #f39c12;
 }
 
+/* Footer */
 footer {
   background-color: #333;
   color: white;
   text-align: center;
   padding: 10px 0;
-  position: fixed;
+  position: relative;
   bottom: 0;
   width: 100%;
+  font-size: 14px;
 }
