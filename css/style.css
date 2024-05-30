@@ -1,9 +1,16 @@
-/* General Styles */
-body {
-  font-family: Arial, sans-serif;
+/* Reset some basic elements to ensure consistency across browsers */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background: #f4f4f4;
 }
 
 header {
@@ -17,32 +24,26 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .main-header .logo {
   max-height: 50px;
 }
 
-nav ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+.main-header nav ul {
+  list-style: none;
 }
 
-nav ul li {
+.main-header nav ul li {
   display: inline;
-  margin-right: 10px;
+  margin: 0 10px;
 }
 
-nav ul li a {
+.main-header nav ul li a {
   color: white;
   text-decoration: none;
-  font-weight: bold;
 }
 
-/* Hero Section */
 .hero {
   text-align: center;
   padding: 50px 0;
@@ -51,13 +52,12 @@ nav ul li a {
 .slideshow-container {
   position: relative;
   max-width: 100%;
-  margin: 0 auto;
+  margin: auto;
   overflow: hidden;
 }
 
 .mySlides {
   display: none;
-  width: 100%;
 }
 
 .mySlides img {
@@ -65,31 +65,6 @@ nav ul li a {
   vertical-align: middle;
 }
 
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-}
-
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
-}
-
-/* Fade Animation */
 .fade {
   animation-name: fade;
   animation-duration: 1.5s;
@@ -100,7 +75,6 @@ nav ul li a {
   to {opacity: 1}
 }
 
-/* CTA Buttons */
 .cta-button-container {
   text-align: center;
   margin: 20px 0;
@@ -114,22 +88,34 @@ nav ul li a {
   text-transform: uppercase;
   cursor: pointer;
   margin: 5px;
-  font-size: 16px;
+  font-size: 1em;
   border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .cta-button:hover {
   background-color: #f39c12;
 }
 
-/* Footer */
 footer {
   background-color: #333;
   color: white;
   text-align: center;
   padding: 10px 0;
   position: relative;
-  bottom: 0;
   width: 100%;
-  font-size: 14px;
+  margin-top: 20px;
+}
+
+/* Ensure that hero section images scale correctly */
+.hero img {
+  width: 100%;
+  height: auto;
+}
+
+/* Container class to center content and limit max width */
+.container {
+  width: 90%;
+  margin: auto;
+  max-width: 1200px;
 }
