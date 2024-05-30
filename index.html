@@ -1,50 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Monitoring Emisi Karbon Penggunaan Kertas</title>
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
-  <script>
-    // Your web app's Firebase configuration
-    var firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
-    };
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    var database = firebase.database();
-  </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Emisi Karbon dan Penggunaan Kertas</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
+        authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+        projectId: "monitoring-penggunaan-kertas",
+        storageBucket: "monitoring-penggunaan-kertas.appspot.com",
+        messagingSenderId: "925210231739",
+        appId: "1:925210231739:web:95020c2af050c8925bfa9e",
+        measurementId: "G-NRMJL82G79"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
 </head>
 <body>
-  <header>
-    <h1>Selamat Datang di Sistem Monitoring Emisi Karbon dari Penggunaan Kertas</h1>
-  </header>
-  <main>
-    <section>
-      <h2>Pilih Departemen</h2>
-      <ul>
-        <li><a href="css/departemen1.html">Departemen 1</a></li>
-        <li><a href="css/departemen2.html">Departemen 2</a></li>
-        <li><a href="css/departemen3.html">Departemen 3</a></li>
-      </ul>
-    </section>
-    <section>
-      <h2>Konversi Emisi Karbon</h2>
-      <ul>
-        <li><a href="css/konversi_kg_ke_kgco2.html">Konversi KG ke KGCO2</a></li>
-        <li><a href="css/konversi_emisi_ke_pohon.html">Konversi Emisi ke Pohon</a></li>
-        <li><a href="css/selama_satu_tahun.html">Emisi Karbon Selama Satu Tahun</a></li>
-      </ul>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2024 Monitoring Emisi Karbon Penggunaan Kertas</p>
-  </footer>
+    <header class="main-header">
+        <div class="container">
+            <img src="images/logo_with_border.png" alt="Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#">Efisiensi Penggunaan Kertas untuk Mengurangi Emisi Karbon dan Menghijaukan Bumi</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="hero">
+            <div class="slideshow-container">
+                <div class="mySlides fade">
+                    <img src="images/hero-image.jpg">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/hero-image2.jpg">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/hero-image3.jpg">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/hero-image4.jpg">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/hero-image5.jpg">
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
+            <h1>Monitoring Penggunaan Kertas</h1>
+        </div>
+        <div class="cta-button-container">
+            <a href="css/selama_satu_tahun.html"><button class="cta-button">Selama Satu Tahun</button></a>
+            <a href="css/departemen1.html"><button class="cta-button">Departemen 1</button></a>
+            <a href="css/departemen2.html"><button class="cta-button">Departemen 2</button></a>
+            <a href="css/departemen3.html"><button class="cta-button">Departemen 3</button></a>
+            <a href="css/konversi_kg_ke_kgco2.html"><button class="cta-button">Konversi KG ke KGCO2</button></a>
+            <a href="css/konversi_emisi_karbon_ke_pohon_dan_biaya.html"><button class="cta-button">Konversi Emisi Karbon ke Pohon dan Biaya</button></a>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 10000); // Change image every 10 seconds
+        }
+    </script>
 </body>
 </html>
