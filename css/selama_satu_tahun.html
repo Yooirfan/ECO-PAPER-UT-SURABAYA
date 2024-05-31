@@ -1,16 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Emisi Karbon Selama Satu Tahun - Monitoring Emisi Karbon</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Penggunaan Kertas Selama Satu Tahun</title>
   <link rel="stylesheet" type="text/css" href="../css/style.css">
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"></script>
-  <script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
     // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
       authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+      databaseURL: "https://monitoring-penggunaan-kertas-default-rtdb.asia-southeast1.firebasedatabase.app", // URL yang benar
       projectId: "monitoring-penggunaan-kertas",
       storageBucket: "monitoring-penggunaan-kertas.appspot.com",
       messagingSenderId: "925210231739",
@@ -19,43 +24,71 @@
     };
 
     // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const analytics = firebase.analytics();
-    const database = firebase.database();
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const database = getDatabase(app);
 
-    // Load data saat halaman dimuat
+    // Function to retrieve data from all departments
     window.onload = function() {
-      firebase.database().ref('departemen1/emisi').once('value').then(function(snapshot) {
-        const emisi1 = snapshot.val() || '0';
-        document.getElementById('emisiDepartemen1').innerText = emisi1;
+      const admRef = ref(database, 'adm_department/penggunaanKertas');
+      const sparepartRef = ref(database, 'sparepart_department/penggunaanKertas');
+      const serviceRef = ref(database, 'service_department/penggunaanKertas');
+
+      const dataList = document.getElementById('dataList');
+      dataList.innerHTML = ''; // Clear previous data
+
+      // Retrieve and display data from ADM Department
+      onValue(admRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          for (const id in data) {
+            const listItem = document.createElement('li');
+            listItem.textContent = `ADM Department - Nama: ${data[id].nama}, Penggunaan Kertas: ${data[id].penggunaanKertas}, Timestamp: ${data[id].timestamp}`;
+            dataList.appendChild(listItem);
+          }
+        }
       });
 
-      firebase.database().ref('departemen2/emisi').once('value').then(function(snapshot) {
-        const emisi2 = snapshot.val() || '0';
-        document.getElementById('emisiDepartemen2').innerText = emisi2;
+      // Retrieve and display data from Sparepart Department
+      onValue(sparepartRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          for (const id in data) {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Sparepart Department - Nama: ${data[id].nama}, Penggunaan Kertas: ${data[id].penggunaanKertas}, Timestamp: ${data[id].timestamp}`;
+            dataList.appendChild(listItem);
+          }
+        }
       });
 
-      firebase.database().ref('departemen3/emisi').once('value').then(function(snapshot) {
-        const emisi3 = snapshot.val() || '0';
-        document.getElementById('emisiDepartemen3').innerText = emisi3;
+      // Retrieve and display data from Service Department
+      onValue(serviceRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          for (const id in data) {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Service Department - Nama: ${data[id].nama}, Penggunaan Kertas: ${data[id].penggunaanKertas}, Timestamp: ${data[id].timestamp}`;
+            dataList.appendChild(listItem);
+          }
+        }
       });
     }
   </script>
 </head>
 <body>
-  <header>
-    <h1>Emisi Karbon Selama Satu Tahun</h1>
+  <header class="main-header">
+    <div class="container">
+      <h1>Penggunaan Kertas Selama Satu Tahun</h1>
+    </div>
   </header>
   <main>
     <section>
-      <h2>Data Emisi Karbon</h2>
-      <p>Departemen 1: <span id="emisiDepartemen1">0</span> kg</p>
-      <p>Departemen 2: <span id="emisiDepartemen2">0</span> kg</p>
-      <p>Departemen 3: <span id="emisiDepartemen3">0</span> kg</p>
+      <h2>Data Penggunaan Kertas dari Semua Departemen</h2>
+      <ul id="dataList"></ul>
     </section>
   </main>
   <footer>
-    <p>&copy; 2024 Monitoring Emisi Karbon Penggunaan Kertas</p>
+    <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
   </footer>
 </body>
 </html>
