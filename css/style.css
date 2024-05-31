@@ -129,9 +129,7 @@ footer {
   transform: translate(-50%, -50%);
   color: white;
   font-size: 2.5em;
-  background: rgba(0, 0, 0, 0.5); /* Background semi-transparan */
   padding: 10px 20px;
-  border-radius: 10px;
 }
 
 /* Additional styling for the form and list in departments */
