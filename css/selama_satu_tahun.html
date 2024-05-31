@@ -59,6 +59,7 @@
       console.log(`Updating data for ${department}:`, data); // Debugging log
       for (const id in data) {
         const usage = data[id];
+        console.log(`Processing ${department} usage:`, usage); // Debugging log
         const date = new Date(usage.timestamp);
         const month = date.getMonth();
         usageData[department][month] += parseInt(usage.penggunaanKertas);
