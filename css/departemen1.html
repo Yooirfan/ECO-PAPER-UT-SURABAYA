@@ -63,7 +63,7 @@
         for (const id in data) {
           const listItem = document.createElement('li');
           listItem.innerHTML = `Nama: ${data[id].nama}, Penggunaan Kertas: ${data[id].penggunaanKertas}, Timestamp: ${data[id].timestamp} 
-          <button onclick="hapusData('${id}')">Hapus</button>`;
+          <button class="hapus" onclick="hapusData('${id}')">Hapus</button>`;
           dataList.appendChild(listItem);
         }
       });
