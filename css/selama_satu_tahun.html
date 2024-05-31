@@ -51,12 +51,22 @@
       Service: Array(12).fill(0)
     };
 
+    let admDataLoaded = false;
+    let sparepartDataLoaded = false;
+    let serviceDataLoaded = false;
+
     const updateUsageData = (department, data) => {
       for (const id in data) {
         const usage = data[id];
         const date = new Date(usage.timestamp);
         const month = date.getMonth();
         usageData[department][month] += parseInt(usage.penggunaanKertas);
+      }
+    };
+
+    const checkAllDataLoaded = () => {
+      if (admDataLoaded && sparepartDataLoaded && serviceDataLoaded) {
+        onDataLoad();
       }
     };
 
@@ -68,19 +78,22 @@
       onValue(admRef, (snapshot) => {
         const data = snapshot.val();
         if (data) updateUsageData('ADM', data);
-        onDataLoad();
+        admDataLoaded = true;
+        checkAllDataLoaded();
       });
 
       onValue(sparepartRef, (snapshot) => {
         const data = snapshot.val();
         if (data) updateUsageData('Sparepart', data);
-        onDataLoad();
+        sparepartDataLoaded = true;
+        checkAllDataLoaded();
       });
 
       onValue(serviceRef, (snapshot) => {
         const data = snapshot.val();
         if (data) updateUsageData('Service', data);
-        onDataLoad();
+        serviceDataLoaded = true;
+        checkAllDataLoaded();
       });
     };
 
