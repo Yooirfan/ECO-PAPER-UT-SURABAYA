@@ -33,7 +33,7 @@
       const penggunaanKertas = document.getElementById('penggunaanKertas').value;
       const nama = document.getElementById('namaPenginput').value;
       const timestamp = new Date().toISOString();
-      push(ref(database, 'Service_department/penggunaanKertas'), {
+      push(ref(database, 'service_department/penggunaanKertas'), {
         penggunaanKertas: penggunaanKertas,
         nama: nama,
         timestamp: timestamp
@@ -46,7 +46,7 @@
 
     // Function to delete data
     window.hapusData = function(id) {
-      remove(ref(database, `Service_department/penggunaanKertas/${id}`)).then(() => {
+      remove(ref(database, `service_department/penggunaanKertas/${id}`)).then(() => {
         alert('Data berhasil dihapus');
       }).catch((error) => {
         alert('Gagal menghapus data: ' + error);
@@ -55,7 +55,7 @@
 
     // Function to retrieve data
     window.onload = function() {
-      const dbRef = ref(database, 'Service_department/penggunaanKertas');
+      const dbRef = ref(database, 'service_department/penggunaanKertas');
       onValue(dbRef, (snapshot) => {
         const data = snapshot.val();
         const dataList = document.getElementById('dataList');
@@ -73,7 +73,7 @@
 <body>
   <header class="main-header">
     <div class="container">
-      <h1>Service Department</h1>
+      <h1>service Department</h1>
     </div>
   </header>
   <main>
