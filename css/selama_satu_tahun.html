@@ -5,17 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Penggunaan Kertas Selama Satu Tahun</title>
   <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script type="module">
-    // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-    // Your web app's Firebase configuration
     const firebaseConfig = {
       apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
       authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
-      databaseURL: "https://monitoring-penggunaan-kertas-default-rtdb.asia-southeast1.firebasedatabase.app", // URL yang benar
+      databaseURL: "https://monitoring-penggunaan-kertas-default-rtdb.asia-southeast1.firebasedatabase.app",
       projectId: "monitoring-penggunaan-kertas",
       storageBucket: "monitoring-penggunaan-kertas.appspot.com",
       messagingSenderId: "925210231739",
@@ -23,56 +22,102 @@
       measurementId: "G-NRMJL82G79"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const database = getDatabase(app);
 
-    // Function to retrieve data from all departments
+    const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    const usageData = {
+      ADM: Array(12).fill(0),
+      Sparepart: Array(12).fill(0),
+      Service: Array(12).fill(0)
+    };
+
+    const updateUsageData = (department, data) => {
+      for (const id in data) {
+        const usage = data[id];
+        const date = new Date(usage.timestamp);
+        const month = date.getMonth();
+        usageData[department][month] += parseInt(usage.penggunaanKertas);
+      }
+    };
+
     window.onload = function() {
       const admRef = ref(database, 'adm_department/penggunaanKertas');
       const sparepartRef = ref(database, 'sparepart_department/penggunaanKertas');
       const serviceRef = ref(database, 'service_department/penggunaanKertas');
 
-      const dataList = document.getElementById('dataList');
-      dataList.innerHTML = ''; // Clear previous data
-
-      // Retrieve and display data from ADM Department
       onValue(admRef, (snapshot) => {
         const data = snapshot.val();
-        if (data) {
-          for (const id in data) {
-            const listItem = document.createElement('li');
-            listItem.textContent = `ADM Department - Nama: ${data[id].nama}, Penggunaan Kertas: ${data[id].penggunaanKertas}, Timestamp: ${data[id].timestamp}`;
-            dataList.appendChild(listItem);
-          }
-        }
+        if (data) updateUsageData('ADM', data);
+        onDataLoad();
       });
 
-      // Retrieve and display data from Sparepart Department
       onValue(sparepartRef, (snapshot) => {
         const data = snapshot.val();
-        if (data) {
-          for (const id in data) {
-            const listItem = document.createElement('li');
-            listItem.textContent = `Sparepart Department - Nama: ${data[id].nama}, Penggunaan Kertas: ${data[id].penggunaanKertas}, Timestamp: ${data[id].timestamp}`;
-            dataList.appendChild(listItem);
-          }
-        }
+        if (data) updateUsageData('Sparepart', data);
+        onDataLoad();
       });
 
-      // Retrieve and display data from Service Department
       onValue(serviceRef, (snapshot) => {
         const data = snapshot.val();
-        if (data) {
-          for (const id in data) {
-            const listItem = document.createElement('li');
-            listItem.textContent = `Service Department - Nama: ${data[id].nama}, Penggunaan Kertas: ${data[id].penggunaanKertas}, Timestamp: ${data[id].timestamp}`;
-            dataList.appendChild(listItem);
+        if (data) updateUsageData('Service', data);
+        onDataLoad();
+      });
+    };
+
+    const onDataLoad = () => {
+      const tableBody = document.getElementById('tableBody');
+      tableBody.innerHTML = '';
+      for (let i = 0; i < 12; i++) {
+        const row = `<tr>
+          <td>${monthNames[i]}</td>
+          <td>${usageData.ADM[i]}</td>
+          <td>${usageData.Sparepart[i]}</td>
+          <td>${usageData.Service[i]}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      }
+
+      const ctx = document.getElementById('usageChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: monthNames,
+          datasets: [
+            {
+              label: 'ADM',
+              data: usageData.ADM,
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 2,
+              fill: false
+            },
+            {
+              label: 'Sparepart',
+              data: usageData.Sparepart,
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 2,
+              fill: false
+            },
+            {
+              label: 'Service',
+              data: usageData.Service,
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 2,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
           }
         }
       });
-    }
+    };
   </script>
 </head>
 <body>
@@ -84,7 +129,18 @@
   <main>
     <section>
       <h2>Data Penggunaan Kertas dari Semua Departemen</h2>
-      <ul id="dataList"></ul>
+      <canvas id="usageChart" width="400" height="200"></canvas>
+      <table>
+        <thead>
+          <tr>
+            <th>Bulan</th>
+            <th>ADM</th>
+            <th>Sparepart</th>
+            <th>Service</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
     </section>
   </main>
   <footer>
