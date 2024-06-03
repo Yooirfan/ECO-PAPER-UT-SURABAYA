@@ -15,7 +15,7 @@ body {
 
 header {
   background-color: #333; /* Ubah warna header menjadi gelap */
-  color: white;
+  color: none;
   text-align: center;
   padding: 1em 0;
 }
