@@ -48,17 +48,29 @@
     const database = getDatabase(app);
 
     const usageData = {
-      ADM: Array(48).fill(0), // 12 bulan x 4 tahun
-      Sparepart: Array(48).fill(0),
-      Service: Array(48).fill(0)
+      2024: {
+        ADM: Array(12).fill(0),
+        Sparepart: Array(12).fill(0),
+        Service: Array(12).fill(0)
+      },
+      2025: {
+        ADM: Array(12).fill(0),
+        Sparepart: Array(12).fill(0),
+        Service: Array(12).fill(0)
+      },
+      2026: {
+        ADM: Array(12).fill(0),
+        Sparepart: Array(12).fill(0),
+        Service: Array(12).fill(0)
+      },
+      2027: {
+        ADM: Array(12).fill(0),
+        Sparepart: Array(12).fill(0),
+        Service: Array(12).fill(0)
+      }
     };
 
-    const monthNames = [];
-    for (let year = 2024; year <= 2027; year++) {
-      for (const month of ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]) {
-        monthNames.push(`${month} ${year}`);
-      }
-    }
+    const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 
     let admDataLoaded = false;
     let sparepartDataLoaded = false;
@@ -70,8 +82,9 @@
         const date = new Date(usage.timestamp);
         const year = date.getFullYear();
         const month = date.getMonth();
-        const index = (year - 2024) * 12 + month;
-        usageData[department][index] += parseInt(usage.penggunaanKertas);
+        if (year >= 2024 && year <= 2027) {
+          usageData[year][department][month] += parseInt(usage.penggunaanKertas);
+        }
       }
     };
 
@@ -113,15 +126,7 @@
       chartContainer.innerHTML = '';
 
       for (let year = 2024; year <= 2027; year++) {
-        const startIndex = (year - 2024) * 12;
-        const endIndex = startIndex + 12;
-        const yearMonthNames = monthNames.slice(startIndex, endIndex);
-        const yearUsageData = {
-          ADM: usageData.ADM.slice(startIndex, endIndex),
-          Sparepart: usageData.Sparepart.slice(startIndex, endIndex),
-          Service: usageData.Service.slice(startIndex, endIndex)
-        };
-
+        const yearUsageData = usageData[year];
         const canvasId = `usageChart${year}`;
         const canvas = `<canvas id="${canvasId}" width="400" height="200"></canvas>`;
         chartContainer.innerHTML += `<div class="chart-container"><h2>Data Penggunaan Kertas Tahun ${year}</h2>${canvas}</div>`;
@@ -130,7 +135,7 @@
         new Chart(ctx, {
           type: 'line',
           data: {
-            labels: yearMonthNames,
+            labels: monthNames,
             datasets: [
               {
                 label: 'ADM',
