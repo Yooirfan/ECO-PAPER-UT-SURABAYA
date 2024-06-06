@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Penggunaan Kertas Selama Beberapa Tahun</title>
+  <title>Penggunaan Kertas Selama Satu Tahun</title>
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -22,13 +22,6 @@
     }
     tr:nth-child(even) {
       background-color: #f9f9f9;
-    }
-    .chart-container {
-      margin-bottom: 50px;
-    }
-    canvas {
-      display: block;
-      margin: 0 auto;
     }
   </style>
   <script type="module">
@@ -51,44 +44,25 @@
     const analytics = getAnalytics(app);
     const database = getDatabase(app);
 
-    const usageData = {
-      2024: {
-        ADM: Array(12).fill(0),
-        Sparepart: Array(12).fill(0),
-        Service: Array(12).fill(0)
-      },
-      2025: {
-        ADM: Array(12).fill(0),
-        Sparepart: Array(12).fill(0),
-        Service: Array(12).fill(0)
-      },
-      2026: {
-        ADM: Array(12).fill(0),
-        Sparepart: Array(12).fill(0),
-        Service: Array(12).fill(0)
-      },
-      2027: {
-        ADM: Array(12).fill(0),
-        Sparepart: Array(12).fill(0),
-        Service: Array(12).fill(0)
-      }
-    };
-
     const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    const usageData = {
+      ADM: Array(12).fill(0),
+      Sparepart: Array(12).fill(0),
+      Service: Array(12).fill(0)
+    };
 
     let admDataLoaded = false;
     let sparepartDataLoaded = false;
     let serviceDataLoaded = false;
 
     const updateUsageData = (department, data) => {
+      console.log(`Updating data for ${department}:`, data); // Debugging log
       for (const id in data) {
         const usage = data[id];
+        console.log(`Processing ${department} usage:`, usage); // Debugging log
         const date = new Date(usage.timestamp);
-        const year = date.getFullYear();
         const month = date.getMonth();
-        if (year >= 2024 && year <= 2027) {
-          usageData[year][department][month] += parseInt(usage.penggunaanKertas);
-        }
+        usageData[department][month] += parseInt(usage.penggunaanKertas);
       }
     };
 
@@ -105,6 +79,7 @@
 
       onValue(admRef, (snapshot) => {
         const data = snapshot.val();
+        console.log('ADM Data:', data); // Debugging log
         if (data) updateUsageData('ADM', data);
         admDataLoaded = true;
         checkAllDataLoaded();
@@ -112,6 +87,7 @@
 
       onValue(sparepartRef, (snapshot) => {
         const data = snapshot.val();
+        console.log('Sparepart Data:', data); // Debugging log
         if (data) updateUsageData('Sparepart', data);
         sparepartDataLoaded = true;
         checkAllDataLoaded();
@@ -119,6 +95,7 @@
 
       onValue(serviceRef, (snapshot) => {
         const data = snapshot.val();
+        console.log('Service Data:', data); // Debugging log
         if (data) updateUsageData('Service', data);
         serviceDataLoaded = true;
         checkAllDataLoaded();
@@ -126,66 +103,81 @@
     };
 
     const onDataLoad = () => {
-      const chartContainer = document.getElementById('chartContainer');
-      chartContainer.innerHTML = '';
+      console.log('All data loaded, updating UI'); // Debugging log
+      const tableBody = document.getElementById('tableBody');
+      tableBody.innerHTML = '';
+      for (let i = 0; i < 12; i++) {
+        const row = `<tr>
+          <td>${monthNames[i]}</td>
+          <td>${usageData.ADM[i]}</td>
+          <td>${usageData.Sparepart[i]}</td>
+          <td>${usageData.Service[i]}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      }
 
-      for (let year = 2024; year <= 2027; year++) {
-        const yearUsageData = usageData[year];
-        const canvasId = `usageChart${year}`;
-        const canvas = `<canvas id="${canvasId}" width="400" height="200"></canvas>`;
-        chartContainer.innerHTML += `<div class="chart-container"><h2>Data Penggunaan Kertas Tahun ${year}</h2>${canvas}</div>`;
-
-        const ctx = document.getElementById(canvasId).getContext('2d');
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: monthNames,
-            datasets: [
-              {
-                label: 'ADM',
-                data: yearUsageData.ADM,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2,
-                fill: false
-              },
-              {
-                label: 'Sparepart',
-                data: yearUsageData.Sparepart,
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 2,
-                fill: false
-              },
-              {
-                label: 'Service',
-                data: yearUsageData.Service,
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 2,
-                fill: false
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+      const ctx = document.getElementById('usageChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: monthNames,
+          datasets: [
+            {
+              label: 'ADM',
+              data: usageData.ADM,
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 2,
+              fill: false
+            },
+            {
+              label: 'Sparepart',
+              data: usageData.Sparepart,
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 2,
+              fill: false
+            },
+            {
+              label: 'Service',
+              data: usageData.Service,
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 2,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
             }
           }
-        });
-      }
+        }
+      });
     };
   </script>
 </head>
 <body>
   <header class="main-header">
     <div class="container">
-      <h1>Penggunaan Kertas Selama Beberapa Tahun</h1>
+      <h1>Penggunaan Kertas Selama Satu Tahun</h1>
     </div>
   </header>
   <main>
     <section>
-      <div id="chartContainer"></div>
+      <h2>Data Penggunaan Kertas dari Semua Departemen</h2>
+      <canvas id="usageChart" width="400" height="200"></canvas>
+      <table>
+        <thead>
+          <tr>
+            <th>Bulan</th>
+            <th>ADM</th>
+            <th>Sparepart</th>
+            <th>Service</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
     </section>
   </main>
   <footer>
