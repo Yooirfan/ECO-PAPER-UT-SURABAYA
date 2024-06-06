@@ -105,6 +105,7 @@
 
       onValue(admRef, (snapshot) => {
         const data = snapshot.val();
+        console.log('ADM Data:', data); // Debugging log
         if (data) updateUsageData('ADM', data);
         admDataLoaded = true;
         checkAllDataLoaded();
@@ -112,6 +113,7 @@
 
       onValue(sparepartRef, (snapshot) => {
         const data = snapshot.val();
+        console.log('Sparepart Data:', data); // Debugging log
         if (data) updateUsageData('Sparepart', data);
         sparepartDataLoaded = true;
         checkAllDataLoaded();
@@ -119,6 +121,7 @@
 
       onValue(serviceRef, (snapshot) => {
         const data = snapshot.val();
+        console.log('Service Data:', data); // Debugging log
         if (data) updateUsageData('Service', data);
         serviceDataLoaded = true;
         checkAllDataLoaded();
@@ -126,6 +129,7 @@
     };
 
     const onDataLoad = () => {
+      console.log('All data loaded, updating UI'); // Debugging log
       const chartContainer = document.getElementById('chartContainer');
       chartContainer.innerHTML = '';
 
