@@ -62,6 +62,44 @@
             top: 50%;
             transform: translateY(-50%);
         }
+        .cta-button-container {
+            position: absolute;
+            z-index: 2;
+            width: 100%;
+            text-align: center;
+            top: 60%; /* Adjust the top position as needed */
+        }
+        .cta-button {
+            background-color: yellow; /* Warna button */
+            color: black; /* Warna teks button */
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            margin: 5px;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 70%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 50%;
+            background-color: yellow; /* Warna tombol */
+            color: black; /* Warna ikon panah */
+            user-select: none;
+            z-index: 2;
+        }
+        .prev {
+            left: 48%;
+        }
+        .next {
+            right: 48%;
+        }
     </style>
 </head>
 <body>
@@ -99,14 +137,14 @@
                     <h1><strong>ECO-PAPER <span class="highlight">UT Surabaya</span></strong></h1>
                 </div>
             </div>
-        </div>
-        <div class="cta-button-container">
-            <a href="css/selama_satu_tahun.html"><button class="cta-button">Selama Satu Tahun</button></a>
-            <a href="css/departemen1.html"><button class="cta-button">ADM Departemen</button></a>
-            <a href="css/departemen2.html"><button class="cta-button">Sparepart Departemen</button></a>
-            <a href="css/departemen3.html"><button class="cta-button">Service Departemen</button></a>
-            <a href="css/konversi_kg_ke_kgco2.html"><button class="cta-button">Konversi KG ke KGCO2</button></a>
-            <a href="css/konversi_emisi_ke_pohon.html"><button class="cta-button">Konversi Emisi Karbon ke Pohon dan Biaya</button></a>
+            <div class="cta-button-container">
+                <a href="css/selama_satu_tahun.html"><button class="cta-button">Selama Satu Tahun</button></a>
+                <a href="css/departemen1.html"><button class="cta-button">ADM Departemen</button></a>
+                <a href="css/departemen2.html"><button class="cta-button">Sparepart Departemen</button></a>
+                <a href="css/departemen3.html"><button class="cta-button">Service Departemen</button></a>
+                <a href="css/konversi_kg_ke_kgco2.html"><button class="cta-button">Konversi KG ke KGCO2</button></a>
+                <a href="css/konversi_emisi_ke_pohon.html"><button class="cta-button">Konversi Emisi Karbon ke Pohon dan Biaya</button></a>
+            </div>
         </div>
     </main>
     <footer>
