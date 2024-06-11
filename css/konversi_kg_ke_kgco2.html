@@ -36,16 +36,9 @@
         const database = getDatabase(app);
 
         const usageData = {
-            2024: {
-                ADM: Array(12).fill(0),
-                Sparepart: Array(12).fill(0),
-                Service: Array(12).fill(0)
-            },
-            2025: {
-                ADM: Array(12).fill(0),
-                Sparepart: Array(12).fill(0),
-                Service: Array(12).fill(0)
-            }
+            ADM: Array(12).fill(0),
+            Sparepart: Array(12).fill(0),
+            Service: Array(12).fill(0)
         };
 
         const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -56,11 +49,11 @@
                 const date = new Date(usage.timestamp);
                 const year = date.getFullYear();
                 const month = date.getMonth();
-                if (year >= 2024 && year <= 2025) {
+                if (year === 2024) {
                     const weight = usage.penggunaanKertas * 0.005;
                     const emission = weight * 1.2;
                     const overLimit = emission > 86.0475 ? "YES" : "NO";
-                    usageData[year][department][month] += weight;
+                    usageData[department][month] += weight;
 
                     console.log(`Department: ${department}, Year: ${year}, Month: ${monthNames[month]}, Sheets Used: ${usage.penggunaanKertas}, Weight: ${weight}, Emission: ${emission}, Over Limit: ${overLimit}`);
                 }
@@ -94,51 +87,48 @@
             const chartContainer = document.getElementById('chartContainer');
             chartContainer.innerHTML = '';
 
-            for (let year = 2024; year <= 2025; year++) {
-                const yearUsageData = usageData[year];
-                const canvasId = `usageChart${year}`;
-                const canvas = `<canvas id="${canvasId}" width="400" height="200"></canvas>`;
-                chartContainer.innerHTML += `<div class="chart-container"><h2>Data Penggunaan Kertas dan Emisi CO2 Tahun ${year}</h2>${canvas}</div>`;
+            const canvasId = 'usageChart2024';
+            const canvas = `<canvas id="${canvasId}" width="400" height="200"></canvas>`;
+            chartContainer.innerHTML += `<div class="chart-container"><h2>Data Penggunaan Kertas dan Emisi CO2 Tahun 2024</h2>${canvas}</div>`;
 
-                const ctx = document.getElementById(canvasId).getContext('2d');
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: monthNames,
-                        datasets: [
-                            {
-                                label: 'ADM',
-                                data: yearUsageData.ADM,
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                borderWidth: 2,
-                                fill: false
-                            },
-                            {
-                                label: 'Sparepart',
-                                data: yearUsageData.Sparepart,
-                                borderColor: 'rgba(255, 99, 132, 1)',
-                                borderWidth: 2,
-                                fill: false
-                            },
-                            {
-                                label: 'Service',
-                                data: yearUsageData.Service,
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 2,
-                                fill: false
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: monthNames,
+                    datasets: [
+                        {
+                            label: 'ADM',
+                            data: usageData.ADM,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        },
+                        {
+                            label: 'Sparepart',
+                            data: usageData.Sparepart,
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        },
+                        {
+                            label: 'Service',
+                            data: usageData.Service,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
-                });
-            }
+                }
+            });
         };
 
         window.onload = loadData;
