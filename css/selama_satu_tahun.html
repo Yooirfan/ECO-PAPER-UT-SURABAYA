@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Penggunaan Kertas Selama Beberapa Tahun</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Penggunaan Kertas Tahun 2024</title>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     table {
@@ -52,33 +52,12 @@
     const database = getDatabase(app);
 
     const usageData = {
-      2024: {
-        ADM: Array(12).fill(0),
-        Sparepart: Array(12).fill(0),
-        Service: Array(12).fill(0)
-      },
-      2025: {
-        ADM: Array(12).fill(0),
-        Sparepart: Array(12).fill(0),
-        Service: Array(12).fill(0)
-      },
-      2026: {
-        ADM: Array(12).fill(0),
-        Sparepart: Array(12).fill(0),
-        Service: Array(12).fill(0)
-      },
-      2027: {
-        ADM: Array(12).fill(0),
-        Sparepart: Array(12).fill(0),
-        Service: Array(12).fill(0)
-      }
+      ADM: Array(12).fill(0),
+      Sparepart: Array(12).fill(0),
+      Service: Array(12).fill(0)
     };
 
     const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-
-    let admDataLoaded = false;
-    let sparepartDataLoaded = false;
-    let serviceDataLoaded = false;
 
     const updateUsageData = (department, data) => {
       for (const id in data) {
@@ -86,105 +65,96 @@
         const date = new Date(usage.timestamp);
         const year = date.getFullYear();
         const month = date.getMonth();
-        if (year >= 2024 && year <= 2027) {
-          usageData[year][department][month] += parseInt(usage.penggunaanKertas);
+        if (year === 2024) {
+          const weight = parseInt(usage.penggunaanKertas) * 0.005;
+          const emission = weight * 1.2;
+          const overLimit = emission > 86.0475 ? "YES" : "NO";
+          usageData[department][month] += weight;
+
+          console.log(`Department: ${department}, Year: ${year}, Month: ${monthNames[month]}, Sheets Used: ${usage.penggunaanKertas}, Weight: ${weight}, Emission: ${emission}, Over Limit: ${overLimit}`);
         }
       }
     };
 
-    const checkAllDataLoaded = () => {
-      if (admDataLoaded && sparepartDataLoaded && serviceDataLoaded) {
-        onDataLoad();
-      }
-    };
-
-    window.onload = function() {
+    const loadData = () => {
       const admRef = ref(database, 'adm_department/penggunaanKertas');
       const sparepartRef = ref(database, 'sparepart_department/penggunaanKertas');
       const serviceRef = ref(database, 'service_department/penggunaanKertas');
 
       onValue(admRef, (snapshot) => {
         const data = snapshot.val();
-        console.log('ADM Data:', data); // Debugging log
         if (data) updateUsageData('ADM', data);
-        admDataLoaded = true;
         checkAllDataLoaded();
       });
 
       onValue(sparepartRef, (snapshot) => {
         const data = snapshot.val();
-        console.log('Sparepart Data:', data); // Debugging log
         if (data) updateUsageData('Sparepart', data);
-        sparepartDataLoaded = true;
         checkAllDataLoaded();
       });
 
       onValue(serviceRef, (snapshot) => {
         const data = snapshot.val();
-        console.log('Service Data:', data); // Debugging log
         if (data) updateUsageData('Service', data);
-        serviceDataLoaded = true;
         checkAllDataLoaded();
       });
     };
 
-    const onDataLoad = () => {
-      console.log('All data loaded, updating UI'); // Debugging log
+    const checkAllDataLoaded = () => {
       const chartContainer = document.getElementById('chartContainer');
       chartContainer.innerHTML = '';
 
-      for (let year = 2024; year <= 2027; year++) {
-        const yearUsageData = usageData[year];
-        const canvasId = `usageChart${year}`;
-        const canvas = `<canvas id="${canvasId}" width="400" height="200"></canvas>`;
-        chartContainer.innerHTML += `<div class="chart-container"><h2>Data Penggunaan Kertas Tahun ${year}</h2>${canvas}</div>`;
+      const canvasId = 'usageChart2024';
+      const canvas = `<canvas id="${canvasId}" width="400" height="200"></canvas>`;
+      chartContainer.innerHTML += `<div class="chart-container"><h2>Data Penggunaan Kertas Tahun 2024</h2>${canvas}</div>`;
 
-        const ctx = document.getElementById(canvasId).getContext('2d');
-        new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: monthNames,
-            datasets: [
-              {
-                label: 'ADM',
-                data: yearUsageData.ADM,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 2,
-                fill: false
-              },
-              {
-                label: 'Sparepart',
-                data: yearUsageData.Sparepart,
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 2,
-                fill: false
-              },
-              {
-                label: 'Service',
-                data: yearUsageData.Service,
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 2,
-                fill: false
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            scales: {
-              y: {
-                beginAtZero: true
-              }
+      const ctx = document.getElementById(canvasId).getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: monthNames,
+          datasets: [
+            {
+              label: 'ADM',
+              data: usageData.ADM,
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 2,
+              fill: false
+            },
+            {
+              label: 'Sparepart',
+              data: usageData.Sparepart,
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 2,
+              fill: false
+            },
+            {
+              label: 'Service',
+              data: usageData.Service,
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 2,
+              fill: false
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true
             }
           }
-        });
-      }
+        }
+      });
     };
+
+    window.onload = loadData;
   </script>
 </head>
 <body>
   <header class="main-header">
     <div class="container">
-      <h1>Penggunaan Kertas Selama Beberapa Tahun</h1>
+      <h1>Penggunaan Kertas Tahun 2024</h1>
     </div>
   </header>
   <main>
