@@ -34,29 +34,22 @@
         .main-header nav ul {
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Buat teks dan logo berada di ujung kiri dan kanan */
+            justify-content: space-between;
         }
         .main-header nav ul li a {
             color: white; /* Ubah warna teks menjadi putih */
             font-weight: bold; /* Buat teks menjadi tebal */
-            background: none; /* Hilangkan background pada link */
         }
         .main-header nav ul li img.logo, .main-header nav ul li img.new-logo {
             height: 50px; /* Sesuaikan ukuran logo */
             vertical-align: middle; /* Vertikal align logo ke tengah */
             border: none; /* Hilangkan border pada gambar */
         }
-        .main-header nav ul li.new-logo-container {
-            margin-top: 5px; /* Sesuaikan jarak vertikal agar sejajar */
+        .main-header nav ul li {
+            background: none; /* Hilangkan background pada elemen <li> */
         }
         .main-header {
             border: none; /* Hilangkan border pada header */
-            background: none; /* Hilangkan background pada header */
-        }
-        .container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
         }
         .slideshow-container {
             position: relative;
@@ -125,6 +118,11 @@
         .next {
             right: 45%;
         }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -134,7 +132,7 @@
             <nav>
                 <ul>
                     <li><a href="#"><strong>EKONOMI KARBON DAN PENGURANGAN EMISI KERTAS</strong></a></li>
-                    <li class="new-logo-container"><img src="images/logo-with-border-2.png" alt="New Logo" class="new-logo"></li>
+                    <li><img src="images/logo-with-border-2.png" alt="New Logo" class="new-logo"></li>
                 </ul>
             </nav>
         </div>
