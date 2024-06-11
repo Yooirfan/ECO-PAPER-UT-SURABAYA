@@ -3,7 +3,7 @@
 Proyek ini bertujuan untuk memonitor penggunaan kertas dan mengkonversi data tersebut menjadi emisi karbon, serta mengestimasi jumlah pohon yang perlu ditanam untuk mengurangi emisi tersebut.
 
 ## URL GitHub Pages
-Anda dapat mengakses proyek ini di [https://username.github.io/ECO-PAPER-UT-SURABAYA/](https://username.github.io/ECO-PAPER-UT-SURABAYA/)
+Anda dapat mengakses proyek ini di [https://username.github.io/ECO-PAPER-UT-SURABAYA/](https://yooirfan.github.io/ECO-PAPER-UT-SURABAYA/)
 
 ## Struktur Proyek
 - `index.html`: Halaman utama
