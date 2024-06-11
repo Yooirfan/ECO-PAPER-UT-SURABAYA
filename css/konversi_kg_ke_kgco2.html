@@ -91,9 +91,9 @@
 
     const loadData = () => {
       const usageData = {
-        ADM: Array(12).fill(0).map(() => []),
-        Sparepart: Array(12).fill(0).map(() => []),
-        Service: Array(12).fill(0).map(() => [])
+        ADM: Array(12).fill(0).map(() => ({ sheetsUsed: 0, weight: 0, emission: 0 })),
+        Sparepart: Array(12).fill(0).map(() => ({ sheetsUsed: 0, weight: 0, emission: 0 })),
+        Service: Array(12).fill(0).map(() => ({ sheetsUsed: 0, weight: 0, emission: 0 }))
       };
 
       const admRef = ref(database, 'adm_department/penggunaanKertas');
@@ -110,14 +110,9 @@
             const sheetsUsed = parseInt(usage.penggunaanKertas);
             const weight = sheetsUsed * 0.005;
             const emission = weight * 2.1;
-            const overLimit = emission > 86.0475 ? "YES" : "NO";
-            usageData[department][month].push({
-              department,
-              sheetsUsed,
-              weight,
-              emission,
-              overLimit
-            });
+            usageData[department][month].sheetsUsed += sheetsUsed;
+            usageData[department][month].weight += weight;
+            usageData[department][month].emission += emission;
           }
         }
       };
@@ -128,10 +123,15 @@
 
         monthNames.forEach((month, index) => {
           const data = [
-            ...usageData.ADM[index],
-            ...usageData.Sparepart[index],
-            ...usageData.Service[index]
+            { department: 'ADM', ...usageData.ADM[index] },
+            { department: 'Sparepart', ...usageData.Sparepart[index] },
+            { department: 'Service', ...usageData.Service[index] }
           ];
+
+          data.forEach(row => {
+            row.overLimit = row.emission > 86.0475 ? "YES" : "NO";
+          });
+
           container.innerHTML += createTable(month, data);
         });
       };
