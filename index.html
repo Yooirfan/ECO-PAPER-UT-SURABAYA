@@ -35,6 +35,9 @@
             color: black; /* Ubah warna teks menjadi hitam */
             font-weight: bold; /* Buat teks menjadi tebal */
         }
+        .slideshow-container {
+            position: relative;
+        }
         .slideshow-container::after {
             content: "";
             display: block;
@@ -53,6 +56,11 @@
         .slideshow-container .text {
             position: absolute;
             z-index: 2;
+            color: white; /* Pastikan teks tidak terkena overlay */
+            width: 100%;
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
         }
     </style>
 </head>
@@ -87,8 +95,10 @@
                 </div>
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                <div class="text">
+                    <h1><strong>ECO-PAPER <span class="highlight">UT Surabaya</span></strong></h1>
+                </div>
             </div>
-            <h1><strong>ECO-PAPER <span class="highlight">UT Surabaya</span></strong></h1>
         </div>
         <div class="cta-button-container">
             <a href="css/selama_satu_tahun.html"><button class="cta-button">Selama Satu Tahun</button></a>
