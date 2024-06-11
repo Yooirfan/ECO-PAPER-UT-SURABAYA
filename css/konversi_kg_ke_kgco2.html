@@ -4,42 +4,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Konversi KG ke KGCO2 untuk Tahun 2024</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    .month-header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    .table-container {
       margin-bottom: 20px;
     }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: center;
-    }
-    th {
-      background-color: #f2f2f2;
-      color: black;
-    }
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-    .month-header {
-      background-color: #f2f2f2;
-      font-weight: bold;
-      font-size: 1.2em;
-      text-align: left;
-      padding: 10px;
+    .table th {
+      background-color: #007bff;
+      color: white;
     }
   </style>
 </head>
 <body>
-  <header>
+  <header class="bg-primary text-white text-center py-3">
     <h1>Konversi KG ke KGCO2 untuk Tahun 2024</h1>
   </header>
-  <main>
+  <main class="container my-4">
     <section id="tables-container"></section>
   </main>
-  <footer>
+  <footer class="bg-dark text-white text-center py-3">
     <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
   </footer>
 
@@ -64,25 +54,31 @@
 
     const createTable = (month, data) => {
       return `
-        <div class="month-header">${month}</div>
-        <table>
-          <tr>
-            <th>Department</th>
-            <th>Sheets Used</th>
-            <th>Weight (kg)</th>
-            <th>Emission (kgCO2)</th>
-            <th>Over Limit</th>
-          </tr>
-          ${data.map(row => `
-            <tr>
-              <td>${row.department}</td>
-              <td>${row.sheetsUsed}</td>
-              <td>${row.weight}</td>
-              <td>${row.emission}</td>
-              <td>${row.overLimit}</td>
-            </tr>
-          `).join('')}
-        </table>
+        <div class="table-container">
+          <div class="month-header">${month}</div>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Department</th>
+                <th>Sheets Used</th>
+                <th>Weight (kg)</th>
+                <th>Emission (kgCO2)</th>
+                <th>Over Limit</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${data.map(row => `
+                <tr>
+                  <td>${row.department}</td>
+                  <td>${row.sheetsUsed}</td>
+                  <td>${row.weight}</td>
+                  <td>${row.emission}</td>
+                  <td>${row.overLimit}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
       `;
     };
 
@@ -106,7 +102,7 @@
           if (year === 2024) {
             const sheetsUsed = parseInt(usage.penggunaanKertas);
             const weight = sheetsUsed * 0.005;
-            const emission = weight * 2.1;
+            const emission = weight * 1.2;
             const overLimit = emission > 86.0475 ? "YES" : "NO";
             usageData[department][month].push({
               department,
