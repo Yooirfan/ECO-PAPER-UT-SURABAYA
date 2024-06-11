@@ -3,88 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konversi KG ke KGCO2</title>
+    <title>Monitoring Penggunaan Kertas dan Emisi CO2</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 8px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <header>
-        <h1>Monitoring Emisi Karbon dan Penggunaan Kertas</h1>
+        <h1>Monitoring Penggunaan Kertas dan Emisi CO2</h1>
     </header>
-    <div class="container">
-        <h1>Konversi KG ke KGCO2</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Departement</th>
-                    <th>Sheets Used</th>
-                    <th>Weight (kg)</th>
-                    <th>Emission (kgCO2)</th>
-                    <th>Over Limit</th>
-                </tr>
-            </thead>
-            <tbody id="data-rows">
-                <!-- Data rows will be inserted here by JavaScript -->
-            </tbody>
-        </table>
-        <div class="back-button">
-            <button onclick="window.location.href='index.html'">Back</button>
-        </div>
-    </div>
+    <main>
+        <div id="chartContainer"></div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
+    </footer>
 
-    <script>
-        // Simulasi data yang diambil dari departemen1.html, departemen2.html, dan departemen3.html
-        const departmentData = [
-            { department: "ADM", sheetsUsed: 2500 },
-            { department: "Sparepart", sheetsUsed: 5500 },
-            { department: "Service", sheetsUsed: 4500 }
-        ];
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-        function calculateWeight(sheets) {
-            return sheets * 0.005;
-        }
+        const firebaseConfig = {
+            apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
+            authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+            databaseURL: "https://monitoring-penggunaan-kertas-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "monitoring-penggunaan-kertas",
+            storageBucket: "monitoring-penggunaan-kertas.appspot.com",
+            messagingSenderId: "925210231739",
+            appId: "1:925210231739:web:95020c2af050c8925bfa9e"
+        };
 
-        function calculateEmission(weight) {
-            return weight * 2.1;
-        }
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-        function isOverLimit(emission) {
-            return emission > 86.0475 ? "YES" : "NO";
-        }
+        const usageData = {
+            2024: {
+                ADM: Array(12).fill(0),
+                Sparepart: Array(12).fill(0),
+                Service: Array(12).fill(0)
+            },
+            2025: {
+                ADM: Array(12).fill(0),
+                Sparepart: Array(12).fill(0),
+                Service: Array(12).fill(0)
+            }
+        };
 
-        const tbody = document.getElementById("data-rows");
+        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 
-        departmentData.forEach(item => {
-            const weight = calculateWeight(item.sheetsUsed).toFixed(2);
-            const emission = calculateEmission(weight).toFixed(2);
-            const overLimit = isOverLimit(emission);
+        const updateUsageData = (department, data) => {
+            for (const id in data) {
+                const usage = data[id];
+                const date = new Date(usage.timestamp);
+                const year = date.getFullYear();
+                const month = date.getMonth();
+                if (year >= 2024 && year <= 2025) {
+                    const weight = usage.penggunaanKertas * 0.005;
+                    const emission = weight * 1.2;
+                    const overLimit = emission > 86.0475 ? "YES" : "NO";
+                    usageData[year][department][month] += weight;
 
-            const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${item.department}</td>
-                <td>${item.sheetsUsed}</td>
-                <td>${weight}</td>
-                <td>${emission}</td>
-                <td>${overLimit}</td>
-            `;
+                    console.log(`Department: ${department}, Year: ${year}, Month: ${monthNames[month]}, Sheets Used: ${usage.penggunaanKertas}, Weight: ${weight}, Emission: ${emission}, Over Limit: ${overLimit}`);
+                }
+            }
+        };
 
-            tbody.appendChild(row);
-        });
+        const loadData = () => {
+            const admRef = ref(database, 'adm_department/penggunaanKertas');
+            const sparepartRef = ref(database, 'sparepart_department/penggunaanKertas');
+            const serviceRef = ref(database, 'service_department/penggunaanKertas');
+
+            onValue(admRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) updateUsageData('ADM', data);
+            });
+
+            onValue(sparepartRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) updateUsageData('Sparepart', data);
+            });
+
+            onValue(serviceRef, (snapshot) => {
+                const data = snapshot.val();
+                if (data) updateUsageData('Service', data);
+            });
+
+            onDataLoad();
+        };
+
+        const onDataLoad = () => {
+            const chartContainer = document.getElementById('chartContainer');
+            chartContainer.innerHTML = '';
+
+            for (let year = 2024; year <= 2025; year++) {
+                const yearUsageData = usageData[year];
+                const canvasId = `usageChart${year}`;
+                const canvas = `<canvas id="${canvasId}" width="400" height="200"></canvas>`;
+                chartContainer.innerHTML += `<div class="chart-container"><h2>Data Penggunaan Kertas dan Emisi CO2 Tahun ${year}</h2>${canvas}</div>`;
+
+                const ctx = document.getElementById(canvasId).getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: monthNames,
+                        datasets: [
+                            {
+                                label: 'ADM',
+                                data: yearUsageData.ADM,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 2,
+                                fill: false
+                            },
+                            {
+                                label: 'Sparepart',
+                                data: yearUsageData.Sparepart,
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 2,
+                                fill: false
+                            },
+                            {
+                                label: 'Service',
+                                data: yearUsageData.Service,
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 2,
+                                fill: false
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        };
+
+        window.onload = loadData;
     </script>
 </body>
 </html>
