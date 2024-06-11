@@ -106,7 +106,7 @@
           if (year === 2024) {
             const sheetsUsed = parseInt(usage.penggunaanKertas);
             const weight = sheetsUsed * 0.005;
-            const emission = weight * 1.2;
+            const emission = weight * 2.1;
             const overLimit = emission > 86.0475 ? "YES" : "NO";
             usageData[department][month].push({
               department,
