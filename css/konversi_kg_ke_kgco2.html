@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Konversi KG ke KGCO2</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -12,32 +28,63 @@
     </header>
     <div class="container">
         <h1>Konversi KG ke KGCO2</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Departement</th>
+                    <th>Sheets Used</th>
+                    <th>Weight (kg)</th>
+                    <th>Emission (kgCO2)</th>
+                    <th>Over Limit</th>
+                </tr>
+            </thead>
+            <tbody id="data-rows">
+                <!-- Data rows will be inserted here by JavaScript -->
+            </tbody>
+        </table>
         <div class="back-button">
-            <button onclick="window.location.href='index.html'">Kembali ke Halaman Utama</button>
-        </div>
-        <div id="konversi-kg" class="form-container">
-            <h2>Konversi Penggunaan Kertas</h2>
-            <div class="form-group">
-                <label for="kg">Penggunaan Kertas (kg):</label>
-                <input type="number" id="kg" name="kg">
-            </div>
-            <button onclick="hitung()">Hitung</button>
-            <div class="result">
-                <p id="kgco2">Jumlah Emisi CO2 (kg): </p>
-            </div>
+            <button onclick="window.location.href='index.html'">Back</button>
         </div>
     </div>
-    <footer>
-        <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
-    </footer>
 
     <script>
-        function hitung() {
-            var kg = document.getElementById("kg").value;
-            var kgco2 = kg * 1.2; // Misalkan 1 kg kertas menghasilkan 1.2 kg CO2
+        // Simulasi data yang diambil dari departemen1.html, departemen2.html, dan departemen3.html
+        const departmentData = [
+            { department: "ADM", sheetsUsed: 2500 },
+            { department: "Sparepart", sheetsUsed: 5500 },
+            { department: "Service", sheetsUsed: 4500 }
+        ];
 
-            document.getElementById("kgco2").innerHTML = "Jumlah Emisi CO2 (kg): " + kgco2.toFixed(2);
+        function calculateWeight(sheets) {
+            return sheets * 0.005;
         }
+
+        function calculateEmission(weight) {
+            return weight * 2.1;
+        }
+
+        function isOverLimit(emission) {
+            return emission > 86.0475 ? "YES" : "NO";
+        }
+
+        const tbody = document.getElementById("data-rows");
+
+        departmentData.forEach(item => {
+            const weight = calculateWeight(item.sheetsUsed).toFixed(2);
+            const emission = calculateEmission(weight).toFixed(2);
+            const overLimit = isOverLimit(emission);
+
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${item.department}</td>
+                <td>${item.sheetsUsed}</td>
+                <td>${weight}</td>
+                <td>${emission}</td>
+                <td>${overLimit}</td>
+            `;
+
+            tbody.appendChild(row);
+        });
     </script>
 </body>
 </html>
