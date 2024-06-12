@@ -3,21 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - ECO-PAPER UT SURABAYA</title>
+    <title>ECO-PAPER UT SURABAYA</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
+        authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+        projectId: "monitoring-penggunaan-kertas",
+        storageBucket: "monitoring-penggunaan-kertas.appspot.com",
+        messagingSenderId: "925210231739",
+        appId: "1:925210231739:web:95020c2af050c8925bfa9e",
+        measurementId: "G-NRMJL82G79"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
     <style>
-        body {
-            color: black; /* Ubah warna font menjadi hitam */
+        .hero h1 {
+            font-size: 4em; /* Perbesar ukuran teks 2x lipat */
+            color: white; /* Warna teks putih */
         }
-        .main-header nav ul li a.cta-button {
-            background-color: yellow; /* Warna button kuning */
-            color: black; /* Warna teks button hitam */
+        .hero h1 .highlight {
+            color: yellow; /* Warna teks kuning untuk "UT Surabaya" */
+        }
+        .main-header nav ul {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .main-header nav ul li a {
+            color: white; /* Ubah warna teks menjadi putih */
+            font-weight: bold; /* Buat teks menjadi tebal */
+        }
+        .main-header nav ul li img.logo, .main-header nav ul li img.new-logo {
+            height: 50px; /* Sesuaikan ukuran logo */
+            vertical-align: middle; /* Vertikal align logo ke tengah */
+            border: none; /* Hilangkan border pada gambar */
+        }
+        .main-header nav ul li {
+            background: none; /* Hilangkan background pada elemen <li> */
+        }
+        .main-header {
+            border: none; /* Hilangkan border pada header */
+        }
+        .slideshow-container {
+            position: relative;
+        }
+        .slideshow-container::after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Menambahkan overlay gelap pada gambar */
+            z-index: 1;
+        }
+        .slideshow-container img {
+            position: relative;
+            z-index: 0;
+        }
+        .slideshow-container .text {
+            position: absolute;
+            z-index: 2;
+            color: white; /* Pastikan teks tidak terkena overlay */
+            width: 100%;
+            text-align: center;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .cta-button-container {
+            position: absolute;
+            z-index: 2;
+            width: 100%;
+            text-align: center;
+            top: 60%; /* Adjust the top position as needed */
+        }
+        .cta-button {
+            background-color: yellow; /* Warna button */
+            color: black; /* Warna teks button */
             font-weight: bold;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
             margin: 5px;
-            text-decoration: none;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 70%;
+            width: 50px; /* Adjust the width for perfect circle */
+            height: 50px; /* Adjust the height for perfect circle */
+            padding: 10px;
+            color: black; /* Warna ikon panah */
+            font-weight: bold;
+            font-size: 18px;
+            border-radius: 50%;
+            background-color: yellow; /* Warna tombol */
+            user-select: none;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .prev {
+            left: 45%;
+        }
+        .next {
+            right: 45%;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
     </style>
 </head>
@@ -27,19 +131,69 @@
             <img src="images/logo_with_border.png" alt="Logo" class="logo">
             <nav>
                 <ul>
-                    <li><a href="index.html"><strong>EKONOMI KARBON DAN PENGURANGAN EMISI KERTAS</strong></a></li>
+                    <li><a href="#"><strong>EKONOMI KARBON DAN PENGURANGAN EMISI KERTAS</strong></a></li>
+                    <li><img src="images/logo-with-border-2.png" alt="New Logo" class="new-logo"></li>
                     <li><a href="About.html" class="cta-button">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
     <main>
-        <h1>About ECO-PAPER UT SURABAYA</h1>
-        <p>Prototype by Muhammad Irfan</p>
-        <!-- Tambahkan konten tentang proyek di sini -->
+        <div class="hero">
+            <div class="slideshow-container">
+                <div class="mySlides fade">
+                    <img src="images/hero-image.jpg" alt="Slideshow Image 1">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/hero-image2.jpg" alt="Slideshow Image 2">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/hero-image3.jpg" alt="Slideshow Image 3">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/hero-image4.jpg" alt="Slideshow Image 4">
+                </div>
+                <div class="mySlides fade">
+                    <img src="images/hero-image5.jpg" alt="Slideshow Image 5">
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                <div class="text">
+                    <h1><strong>ECO-PAPER <span class="highlight">UT Surabaya</span></strong></h1>
+                </div>
+            </div>
+            <div class="cta-button-container">
+                <a href="css/selama_satu_tahun.html"><button class="cta-button">Selama Satu Tahun</button></a>
+                <a href="css/departemen1.html"><button class="cta-button">ADM Departemen</button></a>
+                <a href="css/departemen2.html"><button class="cta-button">Sparepart Departemen</button></a>
+                <a href="css/departemen3.html"><button class="cta-button">Service Departemen</button></a>
+                <a href="css/konversi_kg_ke_kgco2.html"><button class="cta-button">Konversi KG ke KGCO2</button></a>
+                <a href="css/konversi_emisi_ke_pohon.html"><button class="cta-button">Konversi Emisi Karbon ke Pohon dan Biaya</button></a>
+            </div>
+        </div>
     </main>
     <footer>
         <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
     </footer>
+
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("mySlides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}
+            slides[slideIndex-1].style.display = "block";
+            setTimeout(showSlides, 10000); // Change image every 10 seconds
+        }
+    </script>
 </body>
 </html>
