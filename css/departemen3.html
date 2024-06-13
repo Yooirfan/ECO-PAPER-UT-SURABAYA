@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Service Department - Monitoring Penggunaan Kertas</title>
+  <title>service Department - Monitoring Penggunaan Kertas</title>
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <script type="module">
     // Import the functions you need from the SDKs you need
@@ -46,4 +46,47 @@
 
     // Function to delete data
     window.hapusData = function(id) {
-      remove(ref(database, `service_department/penggunaanKertas/${id}`
+      remove(ref(database, `service_department/penggunaanKertas/${id}`)).then(() => {
+        alert('Data berhasil dihapus');
+      }).catch((error) => {
+        alert('Gagal menghapus data: ' + error);
+      });
+    }
+
+    // Function to retrieve data
+    window.onload = function() {
+      const dbRef = ref(database, 'service_department/penggunaanKertas');
+      onValue(dbRef, (snapshot) => {
+        const data = snapshot.val();
+        const dataList = document.getElementById('dataList');
+        dataList.innerHTML = ''; // Clear previous data
+        for (const id in data) {
+          const listItem = document.createElement('li');
+          listItem.innerHTML = `Nama: ${data[id].nama}, Penggunaan Kertas: ${data[id].penggunaanKertas}, Timestamp: ${data[id].timestamp} 
+          <button class="hapus" onclick="hapusData('${id}')">Hapus</button>`;
+          dataList.appendChild(listItem);
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <h1>service Department</h1>
+    </div>
+  </header>
+  <main>
+    <section>
+      <h2>Data Penggunaan Kertas</h2>
+      <input type="text" id="namaPenginput" placeholder="Masukkan nama Anda" />
+      <input type="number" id="penggunaanKertas" placeholder="Masukkan data penggunaan kertas" />
+      <button onclick="simpanData()">Simpan Data</button>
+      <ul id="dataList"></ul>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
+  </footer>
+</body>
+</html>
