@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABOUT - ECO-PAPER UT SURABAYA</title>
     <link rel="stylesheet" href="css/style.css">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
+            authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+            projectId: "monitoring-penggunaan-kertas",
+            storageBucket: "monitoring-penggunaan-kertas.appspot.com",
+            messagingSenderId: "925210231739",
+            appId: "1:925210231739:web:95020c2af050c8925bfa9e",
+            measurementId: "G-NRMJL82G79"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
 </head>
 <body>
     <header class="main-header">
@@ -13,7 +30,7 @@
             <nav>
                 <ul>
                     <li><a href="#"><strong>ABOUT ECO-PAPER</strong></a></li>
-                    <li><img src="images/logo-with-border-2.png" alt="New Logo" class="new-logo"></li>
+                    <li><img src="images/logo-with-border-2.png" alt="New Logo" class="new-logo" style="height: 50px;"></li>
                     <li><a href="index.html" class="cta-button">Beranda</a></li>
                 </ul>
             </nav>
