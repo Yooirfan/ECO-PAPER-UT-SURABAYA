@@ -7,21 +7,21 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
-        authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
-        projectId: "monitoring-penggunaan-kertas",
-        storageBucket: "monitoring-penggunaan-kertas.appspot.com",
-        messagingSenderId: "925210231739",
-        appId: "1:925210231739:web:95020c2af050c8925bfa9e",
-        measurementId: "G-NRMJL82G79"
-      };
+        const firebaseConfig = {
+            apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
+            authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+            projectId: "monitoring-penggunaan-kertas",
+            storageBucket: "monitoring-penggunaan-kertas.appspot.com",
+            messagingSenderId: "925210231739",
+            appId: "1:925210231739:web:95020c2af050c8925bfa9e",
+            measurementId: "G-NRMJL82G79"
+        };
 
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
     </script>
     <style>
         .hero h1 {
@@ -97,7 +97,7 @@
         .prev, .next {
             cursor: pointer;
             position: absolute;
-            top: 80%; /* Adjust the top position to move buttons down */
+            top: 70%;
             width: 50px; /* Adjust the width for perfect circle */
             height: 50px; /* Adjust the height for perfect circle */
             padding: 10px;
@@ -122,23 +122,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        /* Media Query for Mobile Devices */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2em; /* Perkecil ukuran teks pada layar kecil */
-            }
-            .cta-button {
-                padding: 8px 16px; /* Sesuaikan padding tombol */
-                font-size: 0.9em; /* Perkecil ukuran font tombol */
-            }
-            .prev, .next {
-                top: 85%; /* Geser tombol prev dan next lebih ke bawah pada layar kecil */
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
-            }
         }
     </style>
 </head>
@@ -180,12 +163,12 @@
                 </div>
             </div>
             <div class="cta-button-container">
-                <a href="css/selama_satu_tahun.html"><button class="cta-button">Selama Satu Tahun</button></a>
-                <a href="css/departemen1.html"><button class="cta-button">ADM Departemen</button></a>
-                <a href="css/departemen2.html"><button class="cta-button">Sparepart Departemen</button></a>
-                <a href="css/departemen3.html"><button class="cta-button">Service Departemen</button></a>
-                <a href="css/konversi_kg_ke_kgco2.html"><button class="cta-button">Konversi KG ke KGCO2</button></a>
-                <a href="css/konversi_emisi_ke_pohon.html"><button class="cta-button">Konversi Emisi Karbon ke Pohon dan Biaya</button></a>
+                <a href="selama_satu_tahun.html"><button class="cta-button">Selama Satu Tahun</button></a>
+                <a href="departemen1.html"><button class="cta-button">ADM Departemen</button></a>
+                <a href="departemen2.html"><button class="cta-button">Sparepart Departemen</button></a>
+                <a href="departemen3.html"><button class="cta-button">Service Departemen</button></a>
+                <a href="konversi_kg_ke_kgco2.html"><button class="cta-button">Konversi KG ke KGCO2</button></a>
+                <a href="konversi_emisi_ke_pohon.html"><button class="cta-button">Konversi Emisi Karbon ke Pohon dan Biaya</button></a>
             </div>
         </div>
     </main>
