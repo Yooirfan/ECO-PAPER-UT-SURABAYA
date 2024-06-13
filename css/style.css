@@ -28,19 +28,36 @@ header {
 
 .main-header .logo {
   max-height: 50px;
+  background: none; /* Hilangkan shapes putih */
+  box-shadow: none; /* Hilangkan box shadow */
 }
 
 .main-header nav ul {
   list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .main-header nav ul li {
-  display: inline;
   margin: 0 10px;
+  background: none; /* Hilangkan background pada elemen <li> */
 }
 
 .main-header nav ul li a {
-  color: white;
+  color: white; /* Ubah warna teks menjadi putih */
+  text-decoration: none;
+  font-weight: bold; /* Buat teks menjadi tebal */
+}
+
+.main-header nav ul li a.cta-button {
+  background-color: yellow; /* Warna button kuning */
+  color: black; /* Warna teks button hitam */
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
   text-decoration: none;
 }
 
