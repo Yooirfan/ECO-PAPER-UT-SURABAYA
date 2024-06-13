@@ -17,7 +17,7 @@ header {
   background-color: #333; /* Ubah warna header menjadi gelap */
   color: white;
   text-align: center;
-  padding: 1em 0;
+  padding: 0.5em 0; /* Kurangi padding header untuk membuatnya lebih kecil */
 }
 
 .main-header .container {
@@ -27,7 +27,7 @@ header {
 }
 
 .main-header .logo {
-  max-height: 50px;
+  max-height: 40px; /* Kurangi ukuran logo */
   background: none; /* Hilangkan shapes putih */
   box-shadow: none; /* Hilangkan box shadow */
 }
@@ -40,7 +40,7 @@ header {
 }
 
 .main-header nav ul li {
-  margin: 0 10px;
+  margin: 0 5px; /* Kurangi margin pada elemen <li> */
   background: none; /* Hilangkan background pada elemen <li> */
 }
 
@@ -54,10 +54,10 @@ header {
   background-color: yellow; /* Warna button kuning */
   color: black; /* Warna teks button hitam */
   font-weight: bold;
-  padding: 15px 30px; /* Tambah padding untuk membuat tombol lebih besar */
+  padding: 10px 20px; /* Kurangi padding untuk membuat tombol lebih kecil */
   border: none;
   border-radius: 5px;
-  margin: 5px 10px; /* Tambah margin agar tidak terlalu mepet */
+  margin: 5px; /* Tambah margin agar tidak terlalu mepet */
   text-decoration: none;
 }
 
