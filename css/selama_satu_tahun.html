@@ -1,203 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PENGGUNAAN KERTAS PERTAHUN</title>
-  <link rel="stylesheet" type="text/css" href="../css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: center;
-    }
-    th {
-      background-color: #f2f2f2;
-      color: black;
-    }
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-  </style>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
-      authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
-      databaseURL: "https://monitoring-penggunaan-kertas-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "monitoring-penggunaan-kertas",
-      storageBucket: "monitoring-penggunaan-kertas.appspot.com",
-      messagingSenderId: "925210231739",
-      appId: "1:925210231739:web:95020c2af050c8925bfa9e",
-      measurementId: "G-NRMJL82G79"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const database = getDatabase(app);
-
-    const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
-    const usageData = {
-      ADM: Array(24).fill(0),
-      Sparepart: Array(24).fill(0),
-      Service: Array(24).fill(0)
-    };
-
-    let admDataLoaded = false;
-    let sparepartDataLoaded = false;
-    let serviceDataLoaded = false;
-
-    const updateUsageData = (department, data) => {
-      console.log(`Updating data for ${department}:`, data); // Debugging log
-      for (const id in data) {
-        const usage = data[id];
-        console.log(`Processing ${department} usage:`, usage); // Debugging log
-        const date = new Date(usage.timestamp);
-        const year = date.getFullYear();
-        const month = date.getMonth();
-        if (year === 2024 || year === 2025) {
-          const index = year === 2024 ? month : month + 12;
-          usageData[department][index] += parseInt(usage.penggunaanKertas);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PENGGUNAAN KERTAS PERTAHUN</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
         }
-      }
-    };
-
-    const checkAllDataLoaded = () => {
-      if (admDataLoaded && sparepartDataLoaded && serviceDataLoaded) {
-        onDataLoad();
-      }
-    };
-
-    window.onload = function() {
-      const admRef = ref(database, 'adm_department/penggunaanKertas');
-      const sparepartRef = ref(database, 'sparepart_department/penggunaanKertas');
-      const serviceRef = ref(database, 'service_department/penggunaanKertas');
-
-      onValue(admRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log('ADM Data:', data); // Debugging log
-        if (data) updateUsageData('ADM', data);
-        admDataLoaded = true;
-        checkAllDataLoaded();
-      });
-
-      onValue(sparepartRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log('Sparepart Data:', data); // Debugging log
-        if (data) updateUsageData('Sparepart', data);
-        sparepartDataLoaded = true;
-        checkAllDataLoaded();
-      });
-
-      onValue(serviceRef, (snapshot) => {
-        const data = snapshot.val();
-        console.log('Service Data:', data); // Debugging log
-        if (data) updateUsageData('Service', data);
-        serviceDataLoaded = true;
-        checkAllDataLoaded();
-      });
-    };
-
-    const onDataLoad = () => {
-      console.log('All data loaded, updating UI'); // Debugging log
-      const tableBody = document.getElementById('tableBody');
-      tableBody.innerHTML = '';
-      for (let i = 0; i < 24; i++) {
-        const row = `<tr>
-          <td>${monthNames[i % 12]} ${i < 12 ? '2024' : '2025'}</td>
-          <td>${usageData.ADM[i]}</td>
-          <td>${usageData.Sparepart[i]}</td>
-          <td>${usageData.Service[i]}</td>
-        </tr>`;
-        tableBody.innerHTML += row;
-      }
-
-      const ctx = document.getElementById('usageChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: monthNames.concat(monthNames),
-          datasets: [
-            {
-              label: 'ADM',
-              data: usageData.ADM,
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 2,
-              fill: false
-            },
-            {
-              label: 'Sparepart',
-              data: usageData.Sparepart,
-              borderColor: 'rgba(255, 99, 132, 1)',
-              borderWidth: 2,
-              fill: false
-            },
-            {
-              label: 'Service',
-              data: usageData.Service,
-              borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 2,
-              fill: false
-            }
-          ]
-        },
-        options: {
-          responsive: true,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
         }
-      });
-    };
-  </script>
+        th {
+            background-color: #f2f2f2;
+            color: black;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyANIU-bLZYsrWwU9FOYQI2QY-V3deOxZ1E",
+            authDomain: "monitoring-penggunaan-kertas.firebaseapp.com",
+            databaseURL: "https://monitoring-penggunaan-kertas-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "monitoring-penggunaan-kertas",
+            storageBucket: "monitoring-penggunaan-kertas.appspot.com",
+            messagingSenderId: "925210231739",
+            appId: "1:925210231739:web:95020c2af050c8925bfa9e",
+            measurementId: "G-NRMJL82G79"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = getDatabase(app);
+
+        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const usageData = {
+            ADM: Array(24).fill(0),
+            Sparepart: Array(24).fill(0),
+            Service: Array(24).fill(0)
+        };
+
+        let admDataLoaded = false;
+        let sparepartDataLoaded = false;
+        let serviceDataLoaded = false;
+
+        const updateUsageData = (department, data) => {
+            console.log(`Updating data for ${department}:`, data);
+            for (const id in data) {
+                const usage = data[id];
+                console.log(`Processing ${department} usage:`, usage);
+                const date = new Date(usage.timestamp);
+                const year = date.getFullYear();
+                const month = date.getMonth();
+                if (year === 2024 || year === 2025) {
+                    const index = year === 2024 ? month : month + 12;
+                    usageData[department][index] += parseInt(usage.penggunaanKertas);
+                }
+            }
+        };
+
+        const checkAllDataLoaded = () => {
+            if (admDataLoaded && sparepartDataLoaded && serviceDataLoaded) {
+                onDataLoad();
+            }
+        };
+
+        window.onload = function() {
+            const admRef = ref(database, 'adm_department/penggunaanKertas');
+            const sparepartRef = ref(database, 'sparepart_department/penggunaanKertas');
+            const serviceRef = ref(database, 'service_department/penggunaanKertas');
+
+            onValue(admRef, (snapshot) => {
+                const data = snapshot.val();
+                console.log('ADM Data:', data);
+                if (data) updateUsageData('ADM', data);
+                admDataLoaded = true;
+                checkAllDataLoaded();
+            });
+
+            onValue(sparepartRef, (snapshot) => {
+                const data = snapshot.val();
+                console.log('Sparepart Data:', data);
+                if (data) updateUsageData('Sparepart', data);
+                sparepartDataLoaded = true;
+                checkAllDataLoaded();
+            });
+
+            onValue(serviceRef, (snapshot) => {
+                const data = snapshot.val();
+                console.log('Service Data:', data);
+                if (data) updateUsageData('Service', data);
+                serviceDataLoaded = true;
+                checkAllDataLoaded();
+            });
+        };
+
+        const onDataLoad = () => {
+            console.log('All data loaded, updating UI');
+            const tableBody = document.getElementById('tableBody');
+            tableBody.innerHTML = '';
+            for (let i = 0; i < 24; i++) {
+                const row = `<tr>
+                    <td>${monthNames[i % 12]} ${i < 12 ? '2024' : '2025'}</td>
+                    <td>${usageData.ADM[i]}</td>
+                    <td>${usageData.Sparepart[i]}</td>
+                    <td>${usageData.Service[i]}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            }
+
+            const ctx = document.getElementById('usageChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: monthNames.concat(monthNames),
+                    datasets: [
+                        {
+                            label: 'ADM',
+                            data: usageData.ADM,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        },
+                        {
+                            label: 'Sparepart',
+                            data: usageData.Sparepart,
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        },
+                        {
+                            label: 'Service',
+                            data: usageData.Service,
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        };
+    </script>
 </head>
 <body>
-  <header class="main-header">
-    <div class="container">
-      <nav>
-        <ul>
-          <li><img src="../images/logo_with_border.png" alt="Logo" class="logo"></li>
-          <li><a href="index.html"><strong>About ECO-PAPER</strong></a></li>
-          <li><a href="index.html" class="cta-button">Beranda</a></li>
-          <li><a href="departemen1.html" class="cta-button">ADM Departemen</a></li>
-          <li><a href="departemen2.html" class="cta-button">Sparepart Departemen</a></li>
-          <li><a href="departemen3.html" class="cta-button">Service Departemen</a></li>
-          <li><a href="konversi_kg_ke_kgco2.html" class="cta-button">Konversi KG ke KGCO2</a></li>
-          <li><a href="konversi_emisi_ke_pohon.html" class="cta-button">Konversi Emisi Karbon ke Pohon dan Biaya</a></li>
-          <li><img src="../images/logo-with-border-2.png" alt="New Logo" class="new-logo"></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-  <main>
-    <section>
-      <h2>Data Penggunaan Kertas dari Semua Departemen</h2>
-      <canvas id="usageChart" width="400" height="200"></canvas>
-      <table>
-        <thead>
-          <tr>
-            <th>Bulan</th>
-            <th>ADM</th>
-            <th>Sparepart</th>
-            <th>Service</th>
-          </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-      </table>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
-  </footer>
+    <header class="main-header">
+        <div class="container">
+            <img src="images/logo_with_border.png" alt="Logo" class="logo">
+            <nav>
+                <ul>
+                    <li><a href="#"><strong>EKONOMI KARBON DAN PENGURANGAN EMISI KERTAS</strong></a></li>
+                    <li><img src="images/logo-with-border-2.png" alt="New Logo" class="new-logo" style="height: 50px;"></li>
+                    <li><a href="index.html" class="cta-button">Beranda</a></li>
+                    <li><a href="departemen1.html" class="cta-button">ADM Departemen</a></li>
+                    <li><a href="departemen2.html" class="cta-button">Sparepart Departemen</a></li>
+                    <li><a href="departemen3.html" class="cta-button">Service Departemen</a></li>
+                    <li><a href="konversi_kg_ke_kgco2.html" class="cta-button">Konversi KG ke KGCO2</a></li>
+                    <li><a href="konversi_emisi_ke_pohon.html" class="cta-button">Konversi Emisi Karbon ke Pohon dan Biaya</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section>
+            <h2>Data Penggunaan Kertas dari Semua Departemen</h2>
+            <canvas id="usageChart" width="400" height="200"></canvas>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Bulan</th>
+                        <th>ADM</th>
+                        <th>Sparepart</th>
+                        <th>Service</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
+    </footer>
 </body>
 </html>
