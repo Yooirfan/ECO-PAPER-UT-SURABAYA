@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>sparepart Department - Monitoring Penggunaan Kertas</title>
+  <title>Sparepart Department - Monitoring Penggunaan Kertas</title>
   <link rel="stylesheet" type="text/css" href="../css/style.css">
   <script type="module">
     // Import the functions you need from the SDKs you need
@@ -61,10 +61,16 @@
         const dataList = document.getElementById('dataList');
         dataList.innerHTML = ''; // Clear previous data
         for (const id in data) {
-          const listItem = document.createElement('li');
-          listItem.innerHTML = `Nama: ${data[id].nama}, Penggunaan Kertas: ${data[id].penggunaanKertas}, Timestamp: ${data[id].timestamp} 
-          <button class="hapus" onclick="hapusData('${id}')">Hapus</button>`;
-          dataList.appendChild(listItem);
+          const usage = data[id];
+          const date = new Date(usage.timestamp);
+          const year = date.getFullYear();
+          const month = date.getMonth() + 1;
+          if (year === 2024 || year === 2025) {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `Nama: ${usage.nama}, Penggunaan Kertas: ${usage.penggunaanKertas}, Timestamp: ${year}-${month}-${date.getDate()} 
+            <button class="hapus" onclick="hapusData('${id}')">Hapus</button>`;
+            dataList.appendChild(listItem);
+          }
         }
       });
     }
@@ -73,7 +79,7 @@
 <body>
   <header class="main-header">
     <div class="container">
-      <h1>sparepart Department</h1>
+      <h1>Sparepart Department</h1>
     </div>
   </header>
   <main>
