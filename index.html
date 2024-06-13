@@ -97,7 +97,7 @@
         .prev, .next {
             cursor: pointer;
             position: absolute;
-            top: 80%;
+            top: 80%; /* Adjust the top position to move buttons down */
             width: 50px; /* Adjust the width for perfect circle */
             height: 50px; /* Adjust the height for perfect circle */
             padding: 10px;
@@ -122,6 +122,23 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        /* Media Query for Mobile Devices */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em; /* Perkecil ukuran teks pada layar kecil */
+            }
+            .cta-button {
+                padding: 8px 16px; /* Sesuaikan padding tombol */
+                font-size: 0.9em; /* Perkecil ukuran font tombol */
+            }
+            .prev, .next {
+                top: 85%; /* Geser tombol prev dan next lebih ke bawah pada layar kecil */
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
         }
     </style>
 </head>
