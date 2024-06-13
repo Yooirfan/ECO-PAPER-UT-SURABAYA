@@ -14,7 +14,7 @@ body {
 }
 
 header {
-  background-color: #333; /* Ubah warna header menjadi gelap */
+  background-color: #333;
   color: white;
   text-align: center;
   padding: 1em 0;
@@ -28,8 +28,8 @@ header {
 
 .main-header .logo {
   max-height: 50px;
-  background: none; /* Hilangkan shapes putih */
-  box-shadow: none; /* Hilangkan box shadow */
+  background: none;
+  box-shadow: none;
 }
 
 .main-header nav ul {
@@ -41,30 +41,30 @@ header {
 
 .main-header nav ul li {
   margin: 0 10px;
-  background: none; /* Hilangkan background pada elemen <li> */
+  background: none;
 }
 
 .main-header nav ul li a {
-  color: white; /* Ubah warna teks menjadi putih */
+  color: white;
   text-decoration: none;
-  font-weight: bold; /* Buat teks menjadi tebal */
+  font-weight: bold;
 }
 
 .main-header nav ul li a.cta-button {
-  background-color: yellow; /* Warna button kuning */
-  color: black; /* Warna teks button hitam */
+  background-color: yellow;
+  color: black;
   font-weight: bold;
-  padding: 15px 30px; /* Tambah padding untuk membuat tombol lebih besar */
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  margin: 5px 10px; /* Tambah margin agar tidak terlalu mepet */
+  margin: 5px;
   text-decoration: none;
 }
 
 .hero {
   text-align: center;
   padding: 50px 0;
-  position: relative; /* Menambah position relative untuk tumpukan teks dan gambar */
+  position: relative;
 }
 
 .slideshow-container {
@@ -212,4 +212,11 @@ button.hapus {
 
 button.hapus:hover {
   background-color: #c0392b;
+}
+
+/* Additional styling for the new-logo */
+.new-logo {
+  height: 50px;
+  vertical-align: middle;
+  border: none;
 }
