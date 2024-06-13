@@ -46,4 +46,41 @@
 
     // Function to delete data
     window.hapusData = function(id) {
-      remove(ref(database, `service_department/penggunaanKertas/${id}`
+      remove(ref(database, `service_department/penggunaanKertas/${id}`)).then(() => {
+        alert('Data berhasil dihapus');
+      }).catch((error) => {
+        alert('Gagal menghapus data: ' + error);
+      });
+    }
+
+    // Function to retrieve data
+    window.onload = function() {
+      const dbRef = ref(database, 'service_department/penggunaanKertas');
+      onValue(dbRef, (snapshot) => {
+        const data = snapshot.val();
+        const dataList = document.getElementById('dataList');
+        dataList.innerHTML = ''; // Clear previous data
+        for (const id in data) {
+          const usage = data[id];
+          const date = new Date(usage.timestamp);
+          const year = date.getFullYear();
+          const month = date.getMonth() + 1;
+          if (year === 2024 || year === 2025) {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `Nama: ${usage.nama}, Penggunaan Kertas: ${usage.penggunaanKertas}, Timestamp: ${year}-${month}-${date.getDate()} 
+            <button class="hapus" onclick="hapusData('${id}')">Hapus</button>`;
+            dataList.appendChild(listItem);
+          }
+        }
+      });
+    }
+  </script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <h1>Service Department</h1>
+    </div>
+  </header>
+  <main>
+    <
