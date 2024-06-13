@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Konversi KG ke KGCO2 untuk Tahun 2024-2025</title>
+  <title>Konversi KG ke KGCO2 untuk Tahun 2024</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <style>
     .month-header {
@@ -31,7 +31,7 @@
 </head>
 <body>
   <header class="bg-dark text-white text-center py-3">
-    <h1>Konversi KG ke KGCO2 untuk Tahun 2024-2025</h1>
+    <h1>Konversi KG ke KGCO2 untuk Tahun 2024</h1>
   </header>
   <main class="container my-4">
     <section id="tables-container"></section>
@@ -91,9 +91,9 @@
 
     const loadData = () => {
       const usageData = {
-        ADM: Array(24).fill(0).map(() => ({ sheetsUsed: 0, weight: 0, emission: 0 })),
-        Sparepart: Array(24).fill(0).map(() => ({ sheetsUsed: 0, weight: 0, emission: 0 })),
-        Service: Array(24).fill(0).map(() => ({ sheetsUsed: 0, weight: 0, emission: 0 }))
+        ADM: Array(12).fill(0).map(() => ({ sheetsUsed: 0, weight: 0, emission: 0 })),
+        Sparepart: Array(12).fill(0).map(() => ({ sheetsUsed: 0, weight: 0, emission: 0 })),
+        Service: Array(12).fill(0).map(() => ({ sheetsUsed: 0, weight: 0, emission: 0 }))
       };
 
       const admRef = ref(database, 'adm_department/penggunaanKertas');
@@ -106,14 +106,13 @@
           const date = new Date(usage.timestamp);
           const year = date.getFullYear();
           const month = date.getMonth();
-          if (year === 2024 || year === 2025) {
-            const index = year === 2024 ? month : month + 12;
+          if (year === 2024) {
             const sheetsUsed = parseInt(usage.penggunaanKertas);
             const weight = sheetsUsed * 0.005;
             const emission = weight * 2.1;
-            usageData[department][index].sheetsUsed += sheetsUsed;
-            usageData[department][index].weight += weight;
-            usageData[department][index].emission += emission;
+            usageData[department][month].sheetsUsed += sheetsUsed;
+            usageData[department][month].weight += weight;
+            usageData[department][month].emission += emission;
           }
         }
       };
@@ -122,7 +121,7 @@
         const container = document.getElementById('tables-container');
         container.innerHTML = '';
 
-        monthNames.concat(monthNames).forEach((month, index) => {
+        monthNames.forEach((month, index) => {
           const data = [
             { department: 'ADM', ...usageData.ADM[index] },
             { department: 'Sparepart', ...usageData.Sparepart[index] },
@@ -133,7 +132,7 @@
             row.overLimit = row.emission > 86.0475 ? "YES" : "NO";
           });
 
-          container.innerHTML += createTable(month + (index >= 12 ? " 2025" : " 2024"), data);
+          container.innerHTML += createTable(month, data);
         });
       };
 
