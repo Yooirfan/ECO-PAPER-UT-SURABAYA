@@ -26,8 +26,8 @@ header {
   justify-content: space-between;
 }
 
-.main-header .logo, .main-header .new-logo {
-  max-height: 50px; /* Sesuaikan ukuran logo */
+.main-header .logo {
+  max-height: 50px;
   background: none; /* Hilangkan shapes putih */
   box-shadow: none; /* Hilangkan box shadow */
 }
@@ -54,10 +54,10 @@ header {
   background-color: yellow; /* Warna button kuning */
   color: black; /* Warna teks button hitam */
   font-weight: bold;
-  padding: 10px 20px;
+  padding: 15px 30px; /* Tambah padding untuk membuat tombol lebih besar */
   border: none;
   border-radius: 5px;
-  margin: 5px;
+  margin: 5px 10px; /* Tambah margin agar tidak terlalu mepet */
   text-decoration: none;
 }
 
