@@ -3,81 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Konversi Emisi Karbon ke Pohon dan Biaya</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    body, html {
-      font-family: Arial, sans-serif;
-      background-color: #f8f9fa;
-      color: #343a40;
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      position: relative;
-    }
-    header {
-      background-color: #343a40;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-    }
-    .container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      padding-bottom: 60px; /* Added padding for footer space */
-    }
-    h1 {
-      text-align: center;
-      color: white; /* Changed text color to white */
-    }
-    .month-header {
-      background-color: #343a40;
-      color: white;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-    }
-    .table-container {
-      margin-bottom: 20px;
-    }
-    .table th {
-      background-color: #343a40;
-      color: white;
-    }
-    .table {
-      background-color: #ffffff;
-      color: #000000;
-    }
-    .table th, .table td {
-      border: 1px solid #343a40;
-    }
-    footer {
-      background-color: #343a40;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      height: 40px; /* Footer height */
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Konversi Emisi Karbon ke Pohon dan Biaya untuk Tahun 2024-2025</h1> <!-- Updated text and color -->
-  </header>
-  <main class="container my-4">
-    <section id="tables-container"></section>
-  </main>
-  <footer>
-    <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
-  </footer>
-
+  <title>KEBERLANJUTAN: POHON DAN EMISI KARBON - Monitoring Penggunaan Kertas</title>
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
@@ -123,7 +50,7 @@
 
     const loadData = () => {
       const usageData = {
-        ADM: Array(24).fill(0).map(() => []), // Increased array size for 2024 and 2025
+        ADM: Array(24).fill(0).map(() => []), 
         Sparepart: Array(24).fill(0).map(() => []),
         Service: Array(24).fill(0).map(() => [])
       };
@@ -139,7 +66,7 @@
           const year = date.getFullYear();
           const month = date.getMonth();
           if (year === 2024 || year === 2025) {
-            const index = year === 2024 ? month : month + 12; // Adjust index for 2024 and 2025
+            const index = year === 2024 ? month : month + 12; 
             const sheetsUsed = parseInt(usage.penggunaanKertas);
             const weight = sheetsUsed * 0.005;
             const emission = weight * 2.1;
@@ -152,7 +79,7 @@
         const container = document.getElementById('tables-container');
         container.innerHTML = '';
 
-        monthNames.concat(monthNames).forEach((month, index) => { // Concatenate month names for two years
+        monthNames.concat(monthNames).forEach((month, index) => {
           const emissions = [
             ...usageData.ADM[index],
             ...usageData.Sparepart[index],
@@ -162,7 +89,7 @@
           const jumlahPohon = totalEmission * (3.557 / 85.36);
           const biaya = jumlahPohon * 30000;
 
-          container.innerHTML += createTable(month + (index >= 12 ? " 2025" : " 2024"), totalEmission, biaya, jumlahPohon); // Update table header with year
+          container.innerHTML += createTable(month + (index >= 12 ? " 2025" : " 2024"), totalEmission, biaya, jumlahPohon);
         });
       };
 
@@ -187,5 +114,60 @@
 
     window.onload = loadData;
   </script>
+  <style>
+    .month-header {
+      background-color: #343a40;
+      color: white;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .table-container {
+      margin-bottom: 20px;
+    }
+    .table th {
+      background-color: #343a40;
+      color: white;
+    }
+    .table {
+      background-color: #ffffff;
+      color: #000000;
+    }
+    .table th, .table td {
+      border: 1px solid #343a40;
+      padding: 10px;
+    }
+    .table-container {
+      max-width: 90%;
+      margin: 0 auto;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      background-color: #f8f9fa;
+    }
+    .container {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <nav>
+        <ul>
+          <li><img src="../images/logo_with_border.png" alt="Logo" class="logo"></li>
+          <li><a href="../index.html" class="cta-button">BERANDA</a></li>
+        </ul>
+      </nav>
+      <h1>KEBERLANJUTAN: POHON DAN EMISI KARBON</h1>
+    </div>
+  </header>
+  <main class="container my-4">
+    <section id="tables-container"></section>
+  </main>
+  <footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
+  </footer>
 </body>
 </html>
