@@ -3,69 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KALKULATOR JEJAK KARBON</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <style>
-    .month-header {
-      background-color: #343a40;
-      color: white;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-    }
-    .table-container {
-      margin-bottom: 20px;
-    }
-    .table th {
-      background-color: #343a40;
-      color: white;
-    }
-    .table {
-      background-color: #ffffff;
-      color: #000000;
-    }
-    .table th, .table td {
-      border: 1px solid #343a40;
-    }
-    .nav-link, .cta-button {
-      color: black; /* Warna teks button */
-      background-color: yellow; /* Warna button */
-      font-weight: bold;
-      padding: 5px 10px; /* Ukuran button lebih kecil */
-      border: none;
-      border-radius: 5px;
-      margin: 2px; /* Jarak antar button lebih kecil */
-      text-decoration: none;
-    }
-  </style>
-</head>
-<body>
-  <header class="main-header bg-dark text-white text-center py-3">
-    <div class="container">
-      <nav class="d-flex justify-content-between align-items-center">
-        <div class="d-flex align-items-center">
-          <img src="../images/logo_with_border.png" alt="Logo" class="logo">
-          <a class="nav-link" href="../index.html">BERANDA</a>
-        </div>
-        <div class="d-flex">
-          <a class="nav-link" href="selama_satu_tahun.html">PENGGUNAAN KERTAS PERTAHUN</a>
-          <a class="nav-link" href="departemen1.html">ADM DEPARTEMEN</a>
-          <a class="nav-link" href="departemen2.html">SPAREPART DEPARTEMEN</a>
-          <a class="nav-link" href="departemen3.html">SERVICE DEPARTEMEN</a>
-          <a class="nav-link" href="konversi_kg_ke_kgco2.html">KALKULATOR JEJAK KARBON</a>
-          <a class="nav-link" href="konversi_emisi_ke_pohon.html">KEBERLANJUTAN: POHON DAN EMISI KARBON</a>
-        </div>
-      </nav>
-      <h1>KALKULATOR JEJAK KARBON</h1>
-    </div>
-  </header>
-  <main class="container my-4">
-    <section id="tables-container"></section>
-  </main>
-  <footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
-  </footer>
-
+  <title>KALKULATOR JEJAK KARBON - Monitoring Penggunaan Kertas</title>
+  <link rel="stylesheet" type="text/css" href="../css/style.css">
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
@@ -184,5 +123,24 @@
 
     window.onload = loadData;
   </script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <nav>
+        <ul>
+          <li><img src="../images/logo_with_border.png" alt="Logo" class="logo"></li>
+          <li><a href="../index.html" class="cta-button">BERANDA</a></li>
+        </ul>
+      </nav>
+      <h1>KALKULATOR JEJAK KARBON</h1>
+    </div>
+  </header>
+  <main class="container my-4">
+    <section id="tables-container"></section>
+  </main>
+  <footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
+  </footer>
 </body>
 </html>
