@@ -86,7 +86,7 @@
             ...usageData.Service[index]
           ];
           const totalEmission = emissions.reduce((acc, val) => acc + val, 0);
-          const jumlahPohon = totalEmission * (3.557 / 85.36);
+          const jumlahPohon = totalEmission / (10 / 12); // Menghitung jumlah pohon yang diperlukan per bulan
           const biaya = jumlahPohon * 30000;
 
           container.innerHTML += createTable(month + (index >= 12 ? " 2025" : " 2024"), totalEmission, biaya, jumlahPohon);
