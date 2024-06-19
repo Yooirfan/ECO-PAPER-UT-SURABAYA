@@ -28,7 +28,7 @@
       return `
         <div class="table-container">
           <div class="month-header">${month}</div>
-          <table class="table table-bordered">
+          <table class="table table-bordered mx-auto">
             <thead>
               <tr>
                 <th>Department</th>
@@ -130,6 +130,7 @@
       padding: 10px;
       margin-bottom: 10px;
       border-radius: 5px;
+      text-align: center;
     }
     .table-container {
       margin-bottom: 20px;
@@ -144,6 +145,18 @@
     }
     .table th, .table td {
       border: 1px solid #343a40;
+      padding: 10px;
+    }
+    .table-container {
+      max-width: 90%;
+      margin: 0 auto;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      background-color: #f8f9fa;
+    }
+    .container {
+      text-align: center;
     }
   </style>
 </head>
