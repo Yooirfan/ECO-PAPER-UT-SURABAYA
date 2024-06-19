@@ -4,7 +4,68 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KALKULATOR JEJAK KARBON - Monitoring Penggunaan Kertas</title>
-  <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .month-header {
+      background-color: #343a40;
+      color: white;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .table-container {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .table th {
+      background-color: #343a40;
+      color: white;
+    }
+    .table {
+      background-color: #ffffff;
+      color: #000000;
+      margin-right: 20px;
+    }
+    .table th, .table td {
+      border: 1px solid #343a40;
+      padding: 10px;
+    }
+    .table-container {
+      max-width: 90%;
+      margin: 0 auto;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      background-color: #f8f9fa;
+    }
+    .chart-container {
+      width: 40%;
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container">
+      <nav>
+        <ul>
+          <li><img src="../images/logo_with_border.png" alt="Logo" class="logo"></li>
+          <li><a href="../index.html" class="cta-button">BERANDA</a></li>
+        </ul>
+      </nav>
+      <h1>KALKULATOR JEJAK KARBON</h1>
+    </div>
+  </header>
+  <main class="container my-4">
+    <section id="tables-container"></section>
+  </main>
+  <footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
+  </footer>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
@@ -24,32 +85,37 @@
 
     const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 
-    const createTable = (month, data) => {
+    const createTable = (month, data, chartId) => {
       return `
         <div class="table-container">
-          <div class="month-header">${month}</div>
-          <table class="table table-bordered mx-auto">
-            <thead>
-              <tr>
-                <th>Department</th>
-                <th>Sheets Used</th>
-                <th>Weight (kg)</th>
-                <th>Emission (kgCO2)</th>
-                <th>Over Limit</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${data.map(row => `
+          <div>
+            <div class="month-header">${month}</div>
+            <table class="table table-bordered">
+              <thead>
                 <tr>
-                  <td>${row.department}</td>
-                  <td>${row.sheetsUsed}</td>
-                  <td>${row.weight.toFixed(2)}</td>
-                  <td>${row.emission.toFixed(2)}</td>
-                  <td>${row.overLimit}</td>
+                  <th>Department</th>
+                  <th>Sheets Used</th>
+                  <th>Weight (kg)</th>
+                  <th>Emission (kgCO2)</th>
+                  <th>Over Limit</th>
                 </tr>
-              `).join('')}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                ${data.map(row => `
+                  <tr>
+                    <td>${row.department}</td>
+                    <td>${row.sheetsUsed}</td>
+                    <td>${row.weight.toFixed(2)}</td>
+                    <td>${row.emission.toFixed(2)}</td>
+                    <td>${row.overLimit}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+          <div class="chart-container">
+            <canvas id="${chartId}"></canvas>
+          </div>
         </div>
       `;
     };
@@ -98,7 +164,34 @@
             row.overLimit = row.sheetsUsed > 556 || row.weight > 2.77833 || row.emission > 5.8345 ? "YES" : "NO";
           });
 
-          container.innerHTML += createTable(month + (index >= 12 ? " 2025" : " 2024"), data);
+          const chartId = `chart-${index}`;
+          container.innerHTML += createTable(month + (index >= 12 ? " 2025" : " 2024"), data, chartId);
+          drawChart(chartId, data);
+        });
+      };
+
+      const drawChart = (chartId, data) => {
+        const ctx = document.getElementById(chartId).getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: data.map(row => row.department),
+            datasets: [{
+              label: 'Sheets Used',
+              data: data.map(row => row.sheetsUsed),
+              backgroundColor: 'rgba(54, 162, 235, 0.2)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
         });
       };
 
@@ -123,60 +216,5 @@
 
     window.onload = loadData;
   </script>
-  <style>
-    .month-header {
-      background-color: #343a40;
-      color: white;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      text-align: center;
-    }
-    .table-container {
-      margin-bottom: 20px;
-    }
-    .table th {
-      background-color: #343a40;
-      color: white;
-    }
-    .table {
-      background-color: #ffffff;
-      color: #000000;
-    }
-    .table th, .table td {
-      border: 1px solid #343a40;
-      padding: 10px;
-    }
-    .table-container {
-      max-width: 90%;
-      margin: 0 auto;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 10px;
-      background-color: #f8f9fa;
-    }
-    .container {
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <header class="main-header">
-    <div class="container">
-      <nav>
-        <ul>
-          <li><img src="../images/logo_with_border.png" alt="Logo" class="logo"></li>
-          <li><a href="../index.html" class="cta-button">BERANDA</a></li>
-        </ul>
-      </nav>
-      <h1>KALKULATOR JEJAK KARBON</h1>
-    </div>
-  </header>
-  <main class="container my-4">
-    <section id="tables-container"></section>
-  </main>
-  <footer class="bg-dark text-white text-center py-3">
-    <p>&copy; 2024 Monitoring Penggunaan Kertas</p>
-  </footer>
 </body>
 </html>
