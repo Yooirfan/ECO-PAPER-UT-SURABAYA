@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KALKULATOR JEJAK KARBON - Monitoring Penggunaan Kertas</title>
   <link rel="stylesheet" type="text/css" href="../css/style.css">
+  <link rel="icon" href="../favicon.ico" type="image/x-icon"> <!-- Link favicon telah ditambahkan -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
@@ -71,7 +72,7 @@
           const date = new Date(usage.timestamp);
           const year = date.getFullYear();
           const month = date.getMonth();
-          if (year === 2024 || year === 2025) {
+          if (year === 2024 || tahun === 2025) {
             const index = year === 2024 ? month : month + 12;
             const sheetsUsed = parseInt(usage.penggunaanKertas);
             const weight = sheetsUsed * 0.00437;
