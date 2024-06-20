@@ -95,7 +95,7 @@
           ];
 
           data.forEach(row => {
-            row.overLimit = row.sheetsUsed > 556 || row.weight > 2.77833 || row.emission > 2.625 ? "YES" : "NO";
+            row.overLimit = row.sheetsUsed > 556 || row.weight > 2.428 || row.emission > 2.294 ? "YES" : "NO";
           });
 
           container.innerHTML += createTable(month + (index >= 12 ? " 2025" : " 2024"), data);
