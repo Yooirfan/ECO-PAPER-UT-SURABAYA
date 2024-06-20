@@ -75,7 +75,7 @@
             const index = year === 2024 ? month : month + 12;
             const sheetsUsed = parseInt(usage.penggunaanKertas);
             const weight = sheetsUsed * 0.005;
-            const emission = weight * 2.1;
+            const emission = weight * 0.942;
             usageData[department][index].sheetsUsed += sheetsUsed;
             usageData[department][index].weight += weight;
             usageData[department][index].emission += emission;
