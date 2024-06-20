@@ -7,7 +7,21 @@
     <link rel="stylesheet" href="css/style.css">
     <style>
         body {
-            color: black; /* Ubah warna font menjadi hitam */
+            color: black;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .main-header {
+            background: #f4f4f4;
+            padding: 20px 0;
+            border-bottom: #333 3px solid;
         }
         .main-header nav ul {
             display: flex;
@@ -19,26 +33,38 @@
         }
         .main-header nav ul li a {
             text-decoration: none;
+            color: #333;
+            font-weight: bold;
         }
-        .main-header nav ul li img.logo, .main-header nav ul li img.new-logo {
-            height: 50px; /* Sesuaikan ukuran logo */
-            vertical-align: middle; /* Vertikal align logo ke tengah */
-            border: none; /* Hilangkan border pada gambar */
-            background: none; /* Hilangkan shapes putih */
-            box-shadow: none; /* Hilangkan box shadow */
+        .main-header nav ul li img.logo,
+        .main-header nav ul li img.new-logo {
+            height: 50px;
+            vertical-align: middle;
+            border: none;
+            background: none;
+            box-shadow: none;
         }
         .main-header nav ul li a.cta-button {
-            background-color: yellow; /* Warna button kuning */
-            color: black; /* Warna teks button hitam */
+            background-color: yellow;
+            color: black;
             font-weight: bold;
             padding: 15px 30px;
             border: none;
-            border-radius: -px;
+            border-radius: 5px;
             margin: 5px 10px;
             text-decoration: none;
         }
-        .main-header {
-            border: none; /* Hilangkan border pada header */
+        h1, h2 {
+            color: #333;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
     </style>
 </head>
@@ -55,42 +81,57 @@
             </nav>
         </div>
     </header>
-    <main>
+    <main class="container">
         <h1>ABOUT ECO-PAPER UT SURABAYA</h1>
-        <p>Prototype by Muhammad Irfan</p>
-        <!-- Tambahkan konten tentang proyek di sini -->
-        <p><strong>ECO-PAPER UT SURABAYA</strong></p>
-        <p>Proyek ECO-PAPER (Ekonomi Karbon dan Pengurangan Emisi Kertas) UT Surabaya bertujuan untuk memantau penggunaan kertas dan mengonversi data tersebut menjadi emisi karbon. Selain itu, proyek ini juga berfokus pada estimasi jumlah pohon yang perlu ditanam untuk mengimbangi emisi karbon yang dihasilkan, sehingga dapat mendukung upaya pelestarian lingkungan dan penurunan jejak karbon perusahaan.</p>
-        <p>Sebagai anak magang yang berinovasi mengembangkan website ini, saya berusaha menyediakan platform yang intuitif dan informatif bagi pengguna untuk memonitor penggunaan kertas di berbagai departemen. Website ini tidak hanya menampilkan data penggunaan kertas, tetapi juga mengonversinya menjadi angka emisi karbon dan mengestimasi jumlah pohon yang diperlukan untuk kompensasi.</p>
-        <h2>Ekonomi Karbon dan Akuntansi Lingkungan</h2>
-        <p>Ekonomi karbon adalah bidang yang berfokus pada penilaian dan pengelolaan emisi karbon dioksida (CO₂) serta gas rumah kaca lainnya yang berkontribusi terhadap perubahan iklim. Dalam hal ini, akuntansi lingkungan memainkan peran krusial dalam mencatat dan melaporkan dampak lingkungan dari aktivitas operasional suatu entitas.</p>
-        <p>Melalui pendekatan ekonomi karbon, perusahaan dapat menghitung biaya yang terkait dengan emisi karbon dan menerapkan strategi pengurangan emisi yang efektif. Akuntansi lingkungan tidak hanya membantu dalam mengukur efisiensi penggunaan sumber daya, tetapi juga mendorong praktik bisnis yang berkelanjutan dan bertanggung jawab secara lingkungan. Dengan demikian, perusahaan dapat mencapai keseimbangan antara keberlanjutan lingkungan dan keuntungan ekonomi, serta memperkuat komitmen mereka terhadap pelestarian alam dan mitigasi perubahan iklim.</p>
-        <h2>Implementasi Kebijakan Pengurangan Kertas di UT Surabaya</h2>
-        <p>Inovasi ini didasarkan pada studi kasus yang berjudul <i>"BUSINESS GUIDE TO PAPER REDUCTION"</i> oleh Heather Sarantis, September 2002. Studi ini menguraikan berbagai kebijakan yang mendukung pengurangan penggunaan kertas. Contohnya, kebijakan dari Nike, Bank of America, dan Alameda County menunjukkan komitmen mereka dalam mengurangi konsumsi kertas.</p>
-        <p>Selain itu, peraturan pemerintah lokal yang mendukung pengurangan emisi karbon diatur dalam <i>PERATURAN MENTERI LINGKUNGAN HIDUP DAN KEHUTANAN REPUBLIK INDONESIA NOMOR 21 TAHUN 2022 TENTANG TATA LAKSANA PENERAPAN NILAI EKONOMI KARBON</i>. Peraturan ini mendukung pencapaian target kontribusi yang ditetapkan secara nasional (nationally determined contribution) dan pengendalian emisi gas rumah kaca sebesar 29% hingga 41% pada tahun 2030.</p>
-        <p>Berdasarkan kedua referensi tersebut, saya berencana untuk mengurangi penggunaan kertas sebanyak 20%. Penggunaan kertas di UT adalah sebanyak 5 dus per 6 bulan, sehingga dalam satu tahun adalah 10 dus atau 50 rim, yang setara dengan 25.000 lembar kertas. Dengan pengurangan 20%, ini berarti pengurangan sebanyak 5.000 lembar, sehingga UT memiliki batas penggunaan kertas sebesar 20.000 lembar per tahun, atau sekitar 1.667 lembar per bulan.</p>
-        <h2>Perhitungan Berat Kertas PaperOne 70gsm</h2>
-        <p>Perhitungan berat kertas PaperOne 70gsm didasarkan pada data dan analisis yang akurat. Berikut adalah langkah-langkah perhitungan yang digunakan untuk mendapatkan hasil tersebut:</p>
-        <p>1. <strong>Luas Kertas A4 dalam meter persegi:</strong><br>
-            210 mm × 297 mm = 0,210 m × 0,297 m = 0,06237 m²</p>
-        <p>2. <strong>Berat per Lembar:</strong><br>
-            70 gsm × 0,06237 m² = 4,366 gram<br>
-            Jadi, berat satu lembar kertas PaperOne 70gsm adalah sekitar 4,37 gram.</p>
-        <p>3. <strong>Konversi Berat ke Kilogram:</strong><br>
-            4,37 gram = 4,37 / 1000 kilogram = 0,00437 kilogram</p>
-        <h2>Perhitungan Emisi Karbon</h2>
-        <p>Memilih angka 0,942 kg CO2e sebagai jejak karbon untuk 1 kg kertas PaperOne:</p>
-        <p>- <strong>Rata-rata Emisi:</strong> Angka 0,942 kg CO2e adalah rata-rata dari rentang emisi (0,608 kg hingga 1,978 kg CO2e) yang ditemukan dalam studi "Life Cycle Carbon Footprint Analysis of Pulp and Paper Grades in the United States Using Production-line-based Data and Integration."</p>
-        <p>- <strong>Studi Komprehensif:</strong> Studi ini mencakup analisis mendalam dari 252 pabrik kertas di AS, menyediakan data yang representatif dan akurat tentang variasi emisi dalam produksi kertas.</p>
-        <p>- <strong>Praktis dan Akurat:</strong> Menggunakan angka rata-rata memberikan estimasi yang lebih sederhana dan tetap berdasarkan data ilmiah yang dapat diandalkan.</p>
-        <p>Referensi: Kristen E. Tomberlin, Richard Venditti, Yuan Yao. <i>"Life Cycle Carbon Footprint Analysis of Pulp and Paper Grades in the United States Using Production-line-based Data and Integration."</i> BioResources.</p>
-        <h2>Konversi Emisi Karbon ke Pohon untuk Kompensasi</h2>
-        <p>Untuk mengonversi emisi karbon yang dihasilkan dari penggunaan kertas menjadi jumlah pohon yang perlu ditanam, kita perlu mengetahui rata-rata jumlah karbon dioksida (CO2) yang dapat diserap oleh sebuah pohon per tahun.</p>
-        <p>Berdasarkan berbagai sumber, rata-rata sebuah pohon dapat menyerap sekitar 10 hingga 40 kg CO2 per tahun. Sebuah studi menunjukkan bahwa rata-rata umum yang digunakan adalah sekitar 25 kg CO2 per tahun.</p>
-        <p>Referensi:</p>
-        <ul>
-            <li><a href="https://onetreeplanted.org" target="_blank">One Tree Planted</a></li>
-        </ul>
+        <p><strong>Prototype by Muhammad Irfan</strong></p>
+        <section>
+            <p><strong>ECO-PAPER UT SURABAYA</strong></p>
+            <p>Proyek ECO-PAPER (Ekonomi Karbon dan Pengurangan Emisi Kertas) UT Surabaya bertujuan untuk memantau penggunaan kertas dan mengonversi data tersebut menjadi emisi karbon. Selain itu, proyek ini juga berfokus pada estimasi jumlah pohon yang perlu ditanam untuk mengimbangi emisi karbon yang dihasilkan, sehingga dapat mendukung upaya pelestarian lingkungan dan penurunan jejak karbon perusahaan.</p>
+            <p>Sebagai anak magang yang berinovasi mengembangkan website ini, saya berusaha menyediakan platform yang intuitif dan informatif bagi pengguna untuk memonitor penggunaan kertas di berbagai departemen. Website ini tidak hanya menampilkan data penggunaan kertas, tetapi juga mengonversinya menjadi angka emisi karbon dan mengestimasi jumlah pohon yang diperlukan untuk kompensasi.</p>
+        </section>
+        <section>
+            <h2>Ekonomi Karbon dan Akuntansi Lingkungan</h2>
+            <p>Ekonomi karbon adalah bidang yang berfokus pada penilaian dan pengelolaan emisi karbon dioksida (CO₂) serta gas rumah kaca lainnya yang berkontribusi terhadap perubahan iklim. Dalam hal ini, akuntansi lingkungan memainkan peran krusial dalam mencatat dan melaporkan dampak lingkungan dari aktivitas operasional suatu entitas.</p>
+            <p>Melalui pendekatan ekonomi karbon, perusahaan dapat menghitung biaya yang terkait dengan emisi karbon dan menerapkan strategi pengurangan emisi yang efektif. Akuntansi lingkungan tidak hanya membantu dalam mengukur efisiensi penggunaan sumber daya, tetapi juga mendorong praktik bisnis yang berkelanjutan dan bertanggung jawab secara lingkungan. Dengan demikian, perusahaan dapat mencapai keseimbangan antara keberlanjutan lingkungan dan keuntungan ekonomi, serta memperkuat komitmen mereka terhadap pelestarian alam dan mitigasi perubahan iklim.</p>
+        </section>
+        <section>
+            <h2>Implementasi Kebijakan Pengurangan Kertas di UT Surabaya</h2>
+            <p>Inovasi ini didasarkan pada studi kasus yang berjudul <i>"BUSINESS GUIDE TO PAPER REDUCTION"</i> oleh Heather Sarantis, September 2002. Studi ini menguraikan berbagai kebijakan yang mendukung pengurangan penggunaan kertas. Contohnya, kebijakan dari Nike, Bank of America, dan Alameda County menunjukkan komitmen mereka dalam mengurangi konsumsi kertas.</p>
+            <p>Selain itu, peraturan pemerintah lokal yang mendukung pengurangan emisi karbon diatur dalam <i>PERATURAN MENTERI LINGKUNGAN HIDUP DAN KEHUTANAN REPUBLIK INDONESIA NOMOR 21 TAHUN 2022 TENTANG TATA LAKSANA PENERAPAN NILAI EKONOMI KARBON</i>. Peraturan ini mendukung pencapaian target kontribusi yang ditetapkan secara nasional (nationally determined contribution) dan pengendalian emisi gas rumah kaca sebesar 29% hingga 41% pada tahun 2030.</p>
+            <p>Berdasarkan kedua referensi tersebut, saya berencana untuk mengurangi penggunaan kertas sebanyak 20%. Penggunaan kertas di UT adalah sebanyak 5 dus per 6 bulan, sehingga dalam satu tahun adalah 10 dus atau 50 rim, yang setara dengan 25.000 lembar kertas. Dengan pengurangan 20%, ini berarti pengurangan sebanyak 5.000 lembar, sehingga UT memiliki batas penggunaan kertas sebesar 20.000 lembar per tahun, atau sekitar 1.667 lembar per bulan.</p>
+        </section>
+        <section>
+            <h2>Perhitungan Berat Kertas PaperOne 70gsm</h2>
+            <p>Perhitungan berat kertas PaperOne 70gsm didasarkan pada data dan analisis yang akurat. Berikut adalah langkah-langkah perhitungan yang digunakan untuk mendapatkan hasil tersebut:</p>
+            <ol>
+                <li><strong>Luas Kertas A4 dalam meter persegi:</strong><br>
+                    210 mm × 297 mm = 0,210 m × 0,297 m = 0,06237 m²</li>
+                <li><strong>Berat per Lembar:</strong><br>
+                    70 gsm × 0,06237 m² = 4,366 gram<br>
+                    Jadi, berat satu lembar kertas PaperOne 70gsm adalah sekitar 4,37 gram.</li>
+                <li><strong>Konversi Berat ke Kilogram:</strong><br>
+                    4,37 gram = 4,37 / 1000 kilogram = 0,00437 kilogram</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Perhitungan Emisi Karbon</h2>
+            <p>Memilih angka 0,942 kg CO2e sebagai jejak karbon untuk 1 kg kertas PaperOne:</p>
+            <ul>
+                <li><strong>Rata-rata Emisi:</strong> Angka 0,942 kg CO2e adalah rata-rata dari rentang emisi (0,608 kg hingga 1,978 kg CO2e) yang ditemukan dalam studi "Life Cycle Carbon Footprint Analysis of Pulp and Paper Grades in the United States Using Production-line-based Data and Integration."</li>
+                <li><strong>Studi Komprehensif:</strong> Studi ini mencakup analisis mendalam dari 252 pabrik kertas di AS, menyediakan data yang representatif dan akurat tentang variasi emisi dalam produksi kertas.</li>
+                <li><strong>Praktis dan Akurat:</strong> Menggunakan angka rata-rata memberikan estimasi yang lebih sederhana dan tetap berdasarkan data ilmiah yang dapat diandalkan.</li>
+            </ul>
+            <p>Referensi: Kristen E. Tomberlin, Richard Venditti, Yuan Yao. <i>"Life Cycle Carbon Footprint Analysis of Pulp and Paper Grades in the United States Using Production-line-based Data and Integration."</i> BioResources.</p>
+        </section>
+        <section>
+            <h2>Konversi Emisi Karbon ke Pohon untuk Kompensasi</h2>
+            <p>Untuk mengonversi emisi karbon yang dihasilkan dari penggunaan kertas menjadi jumlah pohon yang perlu ditanam, kita perlu mengetahui rata-rata jumlah karbon dioksida (CO2) yang dapat diserap oleh sebuah pohon per tahun.</p>
+            <p>Berdasarkan berbagai sumber, rata-rata sebuah pohon dapat menyerap sekitar 10 hingga 40 kg CO2 per tahun. Sebuah studi menunjukkan bahwa rata-rata umum yang digunakan adalah sekitar 25 kg CO2 per tahun.</p>
+            <p>Referensi:</p>
+            <ul>
+                <li><a href="https://onetreeplanted.org" target="_blank">One Tree Planted</a></li>
+            </ul>
+        </section>
     </main>
     <footer>
         <p>&copy; 2024 PT United Tractors Cabang Surabaya. All rights reserved.</p>
