@@ -40,8 +40,8 @@
             <tbody>
               <tr>
                 <td>${emisi.toFixed(2)}</td>
-                <td>${biaya.toFixed(2)}</td>
-                <td>${pohon.toFixed(2)}</td>
+                <td>${Math.round(biaya)}</td>
+                <td>${Math.round(pohon)}</td>
               </tr>
             </tbody>
           </table>
@@ -90,7 +90,7 @@
           const jumlahPohon = totalEmission / (25 / 12); // Menghitung jumlah pohon yang diperlukan per bulan
           const biaya = jumlahPohon * 30000;
 
-          container.innerHTML += createTable(month + (index >= 12 ? " 2025" : " 2024"), totalEmission, biaya, jumlahPohon);
+          container.innerHTML += createTable(month + (index >= 12 ? " 2025" : " 2024"), totalEmission, Math.round(biaya), Math.round(jumlahPohon));
         });
       };
 
